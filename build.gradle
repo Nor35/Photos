@@ -1,0 +1,98 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.1.2' apply false
+    id 'com.android.library' version '7.1.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.0' apply false
+}
+
+ext {
+
+    androidConfig = [
+            compile_sdk_version: 31,
+            min_sdk_version: 21,
+            target_sdk_version: 31,
+            version_code: 1,
+            app_id: "com.nor35.photos",
+            version_name: "1.0",
+
+            test_instrumentation_runner: "androidx.test.runner.AndroidJUnitRunner"
+    ]
+
+    versions = [
+            coreKtx: "1.6.0",
+            appcompat: "1.4.1",
+            material: "1.4.0",
+            recyclerview: "1.2.1",
+
+            dagger: "2.39",
+            constraintLayout: "1.0.2",
+            retrofit: "2.7.2",
+            okhttp: "4.9.0",
+            room: "2.4.2",
+            navigation: "2.4.1",
+
+            junit: "4.13.2",
+            junit_ext: "1.1.3",
+            espresso: "3.4.0"
+    ]
+
+    core = [
+            coreKtx: "androidx.core:core-ktx:$versions.coreKtx"
+    ]
+
+    appcompat = [
+            appcompat: "androidx.appcompat:appcompat:$versions.appcompat"
+    ]
+
+    material = [
+            material: "com.google.android.material:material:$versions.material"
+    ]
+
+    recyclerview = [
+            recyclerview: "androidx.recyclerview:recyclerview:$versions.recyclerview"
+    ]
+
+    dagger = [
+            dagger: "com.google.dagger:dagger:$versions.dagger",
+            daggerCompiler: "com.google.dagger:dagger-compiler:$versions.dagger"
+    ]
+
+    constraintlayout = [
+            constraintlayout: "androidx.constraintlayout:constraintlayout:$versions.constraintLayout"
+    ]
+
+    retrofit2 = [
+            retrofit2: "com.squareup.retrofit2:retrofit:$versions.retrofit"
+    ]
+
+    okhttp3 = [
+            okhttp3: "com.squareup.okhttp3:okhttp:$versions.okhttp"
+    ]
+
+    room = [
+            roomKtx: "androidx.room:room-ktx:$versions.room",
+            roomRutime: "androidx.room:room-runtime:$versions.room",
+            compiler: "androidx.room:room-compiler:$versions.room"
+    ]
+
+    navigation = [
+            navigationFragmentKtx: "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+            navigationUiKtx: "androidx.navigation:navigation-ui-ktx:$versions.navigation"
+    ]
+
+    junit = [
+            junit: "junit:junit:$versions.junit"
+    ]
+
+    junit_ext = [
+            junit_ext: "androidx.test.ext:junit:$versions.junit_ext"
+    ]
+
+    espresso = [
+            espresso: "androidx.test.espresso:espresso-core:$versions.espresso"
+    ]
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

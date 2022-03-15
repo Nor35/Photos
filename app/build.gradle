@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk androidConfig.compile_sdk_version
+
+    defaultConfig {
+        applicationId androidConfig.app_id
+        minSdk androidConfig.min_sdk_version
+        targetSdk androidConfig.target_sdk_version
+        versionCode androidConfig.version_code
+        versionName androidConfig.version_name
+
+        testInstrumentationRunner androidConfig.test_instrumentation_runner
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    buildFeatures.viewBinding true
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+//configurations {
+//    cleanedAnnotations
+//    implementation.exclude group: 'org.jetbrains' , module:'annotations'
+//}
+
+dependencies {
+
+    // Android
+    implementation core.coreKtx
+    implementation appcompat.appcompat
+    implementation material.material
+    implementation constraintlayout.constraintlayout
+    implementation recyclerview.recyclerview
+
+    //Dagger
+    implementation dagger.dagger
+    implementation dagger.daggerCompiler
+
+    //Network
+    implementation retrofit2.retrofit2
+    implementation okhttp3.okhttp3
+
+    //Room
+    implementation room.roomKtx
+    implementation room.roomRutime
+    kapt room.compiler
+
+    //Navigation
+    implementation navigation.navigationFragmentKtx
+    implementation navigation.navigationUiKtx
+
+    //Tests
+    testImplementation junit.junit
+    androidTestImplementation junit_ext.junit_ext
+    androidTestImplementation espresso.espresso
+}
