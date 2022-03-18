@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/helloFragment"
         app:moduleName="feature_album"
-        android:name="com.nor35.photos.feature_album.presentation.HelloFragment"
+        android:name="com.nor35.photos.feature_album.presentation.album_list.HelloFragment"
         android:label="fragment_hello"
         tools:layout="@layout/fragment_hello_2" />
 </navigation>

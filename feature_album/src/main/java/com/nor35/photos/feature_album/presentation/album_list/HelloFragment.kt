@@ -1,4 +1,4 @@
-package com.nor35.photos.feature_album.presentation
+package com.nor35.photos.feature_album.presentation.album_list
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
