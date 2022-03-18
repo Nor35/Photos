@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Photos">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.NavHostActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
