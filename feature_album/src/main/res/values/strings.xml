@@ -2,4 +2,7 @@
     <string name="app_name">Photos</string>
     <string name="hello_blank_fragment_2">Hello blank fragment 2</string>
     <string name="feature_album">feature album</string>
+    <string name="add_image">add image</string>
+    <string name="reload_all">Reload All</string>
+
 </resources>

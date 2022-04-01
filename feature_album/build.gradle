@@ -29,7 +29,9 @@ android {
         }
     }
 
-    buildFeatures.viewBinding true
+    viewBinding {
+        enabled = true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -58,7 +60,13 @@ dependencies {
 
     //Network
     implementation retrofit2.retrofit2
+    implementation retrofit2.converterGson
     implementation okhttp3.okhttp3
+    implementation okhttp3.okhttp3_logging
+    implementation timber.timber
+
+    //Coil
+    implementation("io.coil-kt:coil:2.0.0-rc02")
 
     //Room
     implementation room.roomKtx

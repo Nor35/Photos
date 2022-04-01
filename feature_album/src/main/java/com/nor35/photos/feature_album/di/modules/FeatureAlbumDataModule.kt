@@ -1,0 +1,46 @@
+package com.nor35.photos.feature_album.di.modules
+
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.nor35.photos.domain.Constants.PHOTO_DATABASE_NAME
+import com.nor35.photos.feature_album.data.database.PhotoDao
+import com.nor35.photos.feature_album.data.database.PhotoDatabase
+import com.nor35.photos.feature_album.data.remote.PhotoApi
+import com.nor35.photos.feature_album.data.repository.PhotoRepositoryImp
+import com.nor35.photos.feature_album.di.FeatureAlbumScope
+import com.nor35.photos.feature_album.domain.repository.PhotoRepository
+import dagger.Module
+import dagger.Provides
+
+
+@Module
+class FeatureAlbumDataModule {
+
+    @Provides
+    @FeatureAlbumScope
+    fun providePhotoDatabase(context: Context): PhotoDatabase{
+        return Room.databaseBuilder(
+            context,
+            PhotoDatabase::class.java,
+            PHOTO_DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @FeatureAlbumScope
+    fun providePhotoDao(db: PhotoDatabase): PhotoDao{
+        return db.getPhotoDao()
+    }
+
+    @Provides
+    @FeatureAlbumScope
+    fun providePhotoRepository(photoApi: PhotoApi
+                               ,photoDao: PhotoDao
+    ): PhotoRepository {
+        return PhotoRepositoryImp(photoApi
+            , photoDao
+        )
+    }
+}
