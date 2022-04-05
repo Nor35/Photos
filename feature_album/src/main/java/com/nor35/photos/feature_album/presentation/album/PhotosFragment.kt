@@ -1,18 +1,17 @@
-package com.nor35.photos.feature_album.presentation.album_list
+package com.nor35.photos.feature_album.presentation.album
 
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.core.view.MenuCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
+import com.nor35.photos.domain.Constants.NUMBER_OF_Rows
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.FragmentPhotosBinding
 import com.nor35.photos.feature_album.di.DaggerFeatureAlbumComponent
-import com.nor35.photos.feature_album.presentation.album_list.recyclerview.PhotoAdapter
+import com.nor35.photos.feature_album.presentation.album.recyclerview.PhotoAdapter
 import javax.inject.Inject
 
 
@@ -33,17 +32,22 @@ class PhotosFragment : Fragment() {
         setHasOptionsMenu(true)
         binding = FragmentPhotosBinding.inflate(inflater, container, false)
 
+        initAlbumRecyclerview()
+        setupAlbumViewModelObserver()
+
+        return binding.root
+    }
+
+    private fun initAlbumRecyclerview(){
         binding.albumRecyclerview.apply{
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_COLUMNS
+            layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_Rows
                 , LinearLayoutManager.HORIZONTAL, false
             )
             adapter = photoAdapter
         }
-
-        setupAlbumViewModelObserver()
-
-        return binding.root
+        photoAdapter.setOnClickListener { photoId: Long ->
+            albumViewModel.navigateToPhotoDetail(photoId) }
     }
 
     private fun setupAlbumViewModelObserver() {
@@ -72,11 +76,16 @@ class PhotosFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_add_image -> {
-                Toast.makeText(this@PhotosFragment.context, "addOne", Toast.LENGTH_SHORT).show()
+                albumViewModel.getPhoto()
+                binding.albumRecyclerview.postDelayed({
+                    binding.albumRecyclerview
+                        .smoothScrollToPosition(photoAdapter.itemCount - 1)
+                }, 1000)
                 true
             }
             R.id.action_reload_all -> {
-                Toast.makeText(this@PhotosFragment.context, "reload all", Toast.LENGTH_SHORT).show()
+                photoAdapter.deletePhotos()
+                albumViewModel.reloadAllPhotos()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -87,6 +96,7 @@ class PhotosFragment : Fragment() {
         DaggerFeatureAlbumComponent
             .builder()
             .bindContext(context)
+            .bindFragment(this)
             .buildAlbumComponent()
             .inject(this)
     }

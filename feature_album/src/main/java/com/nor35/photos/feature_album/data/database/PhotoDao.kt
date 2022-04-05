@@ -13,6 +13,9 @@ interface PhotoDao {
     @Query("SELECT * FROM ${PhotoEntity.TABLE_NAME}")
     fun getAll(): Flow<List<PhotoEntity>>
 
+    @Query("SELECT * FROM ${PhotoEntity.TABLE_NAME} WHERE id= :photoId LIMIT 1")
+    suspend fun getPhoto(photoId: Long): PhotoEntity
+
     @Query("SELECT * FROM ${PhotoEntity.TABLE_NAME} ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomPhoto(): PhotoEntity
 

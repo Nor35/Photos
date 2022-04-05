@@ -4,12 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:moduleName="feature_album"
-    app:startDestination="@id/helloFragment">
+    app:startDestination="@id/albumFragment">
 
     <fragment
-        android:id="@+id/helloFragment"
+        android:id="@+id/albumFragment"
         app:moduleName="feature_album"
-        android:name="com.nor35.photos.feature_album.presentation.album_list.PhotosFragment"
-        android:label="fragment_hello"
-        tools:layout="@layout/fragment_photos" />
+        android:name="com.nor35.photos.feature_album.presentation.album.PhotosFragment"
+        android:label="fragment_album"
+        tools:layout="@layout/fragment_photos" >
+        <action
+            android:id="@+id/action_albumFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.nor35.photos.feature_album.presentation.photo_detail.PhotoDetailFragment"
+        android:label="PhotoDetailFragment" >
+        <argument
+            android:name="photoId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 </navigation>

@@ -8,9 +8,13 @@ interface PhotoRepository {
 
     suspend fun getPhoto(): PhotoEntity
 
+    suspend fun getPhoto(photoId: Long): PhotoEntity
+
     suspend fun getAlbum(): List<PhotoEntity>
 
     suspend fun getRandomPhotoFromDB(): PhotoEntity?
 
     suspend fun getAlbumFromDB(): List<PhotoEntity>?
+
+    suspend fun deleteAllPhotosFromDB()
 }

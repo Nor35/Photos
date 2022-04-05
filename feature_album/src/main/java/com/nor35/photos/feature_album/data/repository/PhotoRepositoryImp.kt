@@ -21,8 +21,13 @@ class PhotoRepositoryImp @Inject constructor(
         val photoEntity = photoApi.getPhoto().toDataBaseModel()
         val id = photoDao.insertPhoto(photoEntity)
         Timber.i("Load photo with id = $id")
+        photoEntity.id = id
 
         return photoEntity
+    }
+
+    override suspend fun getPhoto(photoId: Long): PhotoEntity {
+        return photoDao.getPhoto(photoId)
     }
 
     override suspend fun getAlbum(): List<PhotoEntity> {
@@ -39,5 +44,9 @@ class PhotoRepositoryImp @Inject constructor(
 
     override suspend fun getAlbumFromDB(): List<PhotoEntity> {
         return photoDao.getAlbumFromDB()
+    }
+
+    override suspend fun deleteAllPhotosFromDB() {
+        photoDao.deleteAll()
     }
 }

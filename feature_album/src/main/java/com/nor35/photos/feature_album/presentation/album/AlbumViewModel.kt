@@ -1,28 +1,48 @@
-package com.nor35.photos.feature_album.presentation.album_list
+package com.nor35.photos.feature_album.presentation.album
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nor35.photos.domain.Constants.NUMBER_OF_PHOTOS_ON_PAGE
+import androidx.navigation.NavController
 import com.nor35.photos.domain.Resource
+import com.nor35.photos.feature_album.domain.use_case.GetAlbumUseCase
 import com.nor35.photos.feature_album.domain.use_case.GetPhotoUseCase
+import com.nor35.photos.feature_album.domain.use_case.ReloadAllPhotosUseCase
+import com.nor35.photos.feature_album.domain.use_case.UseCaseInterface
+import com.nor35.photos.feature_album.presentation.album.state.PhotoState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+
 class AlbumViewModel @Inject constructor(
-    private val getPhotoUseCase: GetPhotoUseCase
+    private val getAlbumUseCase: GetAlbumUseCase,
+    private val getPhotoUseCase: GetPhotoUseCase,
+    private val getReloadAllPhotosUseCase: ReloadAllPhotosUseCase,
+    private val navController: NavController
 ): ViewModel() {
 
     private val _liveData = MutableLiveData(PhotoState())
     val liveData = _liveData
 
     init {
-        getPhoto()
+        getAlbum()
     }
 
-    private fun getPhoto() {
-        getPhotoUseCase.invoke().onEach { result ->
+    private fun getAlbum() {
+        invokeUseCase(getAlbumUseCase)
+    }
+
+    fun getPhoto() {
+        invokeUseCase(getPhotoUseCase)
+    }
+
+    fun reloadAllPhotos(){
+        invokeUseCase(getReloadAllPhotosUseCase)
+    }
+
+    private fun invokeUseCase(useCase: UseCaseInterface){
+        useCase.invoke().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     val data = result.data
@@ -39,5 +59,11 @@ class AlbumViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun navigateToPhotoDetail(photoId: Long) {
+
+        val navDirections = PhotosFragmentDirections.actionAlbumFragmentToPhotoDetailFragment(photoId)
+        navController.navigate(navDirections)
     }
 }

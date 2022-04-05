@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface PhotoApi {
 
-    @GET("json/200/200/cat/")
+    @GET("json/320/320/cat/")
     suspend fun getPhoto(): LoremFlickrDto
 }

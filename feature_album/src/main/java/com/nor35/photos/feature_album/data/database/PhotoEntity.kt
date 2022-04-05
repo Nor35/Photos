@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.nor35.photos.feature_album.domain.model.Photo
+import com.nor35.photos.feature_album.domain.model.PhotoDetail
 
 @Entity(tableName = PhotoEntity.TABLE_NAME)
 data class PhotoEntity(
@@ -24,6 +25,14 @@ data class PhotoEntity(
 }
 
 fun PhotoEntity.toDomainModel() = Photo(
+    id = id,
+    imageUrl = url,
+    width = width,
+    height = height
+)
+
+fun PhotoEntity.toPhotoDetailDomainModel() = PhotoDetail(
+    id = id,
     imageUrl = url,
     width = width,
     height = height

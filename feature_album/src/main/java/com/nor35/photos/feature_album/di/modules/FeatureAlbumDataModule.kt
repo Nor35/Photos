@@ -1,6 +1,11 @@
 package com.nor35.photos.feature_album.di.modules
 
+import android.app.Activity
 import android.content.Context
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.nor35.photos.domain.Constants.PHOTO_DATABASE_NAME
@@ -43,4 +48,11 @@ class FeatureAlbumDataModule {
             , photoDao
         )
     }
+
+    @Provides
+    @FeatureAlbumScope
+    fun provideNavController(fragment: Fragment): NavController {
+        return fragment.findNavController()
+    }
+
 }
