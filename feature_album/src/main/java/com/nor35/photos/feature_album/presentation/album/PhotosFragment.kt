@@ -77,10 +77,11 @@ class PhotosFragment : Fragment() {
         when (item.itemId) {
             R.id.action_add_image -> {
                 albumViewModel.getPhoto()
-                binding.albumRecyclerview.postDelayed({
-                    binding.albumRecyclerview
-                        .smoothScrollToPosition(photoAdapter.itemCount - 1)
-                }, 1000)
+                if(photoAdapter.itemCount > 0)
+                    binding.albumRecyclerview.postDelayed({
+                        binding.albumRecyclerview
+                            .smoothScrollToPosition(photoAdapter.itemCount - 1)
+                    }, 1000)
                 true
             }
             R.id.action_reload_all -> {
