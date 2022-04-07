@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
 import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
+import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.PhotoItemBinding
 import com.nor35.photos.feature_album.domain.model.Photo
+import timber.log.Timber
 import javax.inject.Inject
 
 class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
@@ -63,7 +65,8 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
                 fun bind(photo: Photo){
 
                     val params = this.itemView.layoutParams
-                    params.width = getPhotoWidth()
+                    params.width = PhotoLayoutParams.width
+                    params.height = PhotoLayoutParams.width
                     this.itemView.layoutParams = params
 
                     if(photo.imageUrl.isEmpty()) {
@@ -80,11 +83,10 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
                         }
                     }
                 }
+    }
 
-                private fun getPhotoWidth(): Int {
+    object PhotoLayoutParams {
 
-                    val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-                    return  screenWidth / NUMBER_OF_COLUMNS
-                }
-            }
+        val width = (Resources.getSystem().displayMetrics.widthPixels / NUMBER_OF_COLUMNS) - 1
+    }
 }

@@ -38,23 +38,19 @@
 
     <TextView
         android:id="@+id/photoDetail_widht"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/text_view_style"
         app:layout_constraintTop_toBottomOf="@+id/photoDetail_cardView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="width field"
-        android:textSize="24sp"/>
+        tools:text="width field"/>
 
     <TextView
         android:id="@+id/photoDetail_height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/text_view_style"
         app:layout_constraintTop_toBottomOf="@+id/photoDetail_widht"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="height field"
-        android:textSize="24sp"/>
+        tools:text="height field"/>
 
     <ProgressBar
         android:id="@+id/photoDetail_progressBar"

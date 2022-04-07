@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nor35.photos.domain.Constants.NUMBER_OF_Rows
+import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.FragmentPhotosBinding
 import com.nor35.photos.feature_album.di.DaggerFeatureAlbumComponent
@@ -41,7 +41,7 @@ class PhotosFragment : Fragment() {
     private fun initAlbumRecyclerview(){
         binding.albumRecyclerview.apply{
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_Rows
+            layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_ROWS
                 , LinearLayoutManager.HORIZONTAL, false
             )
             adapter = photoAdapter

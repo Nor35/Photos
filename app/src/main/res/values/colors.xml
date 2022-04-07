@@ -9,4 +9,16 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="iconColor">@color/white</color>
+
+
+    <color name="primaryColor">#b0bec5</color>
+    <color name="primaryLightColor">#e2f1f8</color>
+    <color name="primaryDarkColor">#808e95</color>
+    <color name="primaryTextColor">#000000</color>
+
+    <color name="secondaryColor">#c5b7b0</color>
+    <color name="secondaryLightColor">#f8e9e2</color>
+    <color name="secondaryDarkColor">#948781</color>
+    <color name="secondaryTextColor">#000000</color>
+
 </resources>
