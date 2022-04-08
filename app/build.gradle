@@ -87,4 +87,5 @@ dependencies {
     testImplementation junit.junit
     androidTestImplementation junit_ext.junit_ext
     androidTestImplementation espresso.espresso
+    testImplementation "io.mockk:mockk:1.12.2"
 }
