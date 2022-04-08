@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
 import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.FragmentPhotosBinding
@@ -39,15 +40,24 @@ class PhotosFragment : Fragment() {
     }
 
     private fun initAlbumRecyclerview(){
+        photoAdapter.resetPhotoLayoutParams()
+
         binding.albumRecyclerview.apply{
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), NUMBER_OF_ROWS
-                , LinearLayoutManager.HORIZONTAL, false
-            )
+            layoutManager = GridLayoutManager(requireContext(), getSpanCount(),
+                LinearLayoutManager.HORIZONTAL, false)
             adapter = photoAdapter
         }
         photoAdapter.setOnClickListener { photoId: Long ->
             albumViewModel.navigateToPhotoDetail(photoId) }
+    }
+
+    private fun getSpanCount(): Int{
+        return if (resources.configuration.orientation == LinearLayoutManager.VERTICAL) {
+            NUMBER_OF_ROWS
+        } else {
+            NUMBER_OF_COLUMNS
+        }
     }
 
     private fun setupAlbumViewModelObserver() {

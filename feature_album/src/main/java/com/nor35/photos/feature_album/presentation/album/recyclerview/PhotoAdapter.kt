@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
@@ -33,6 +34,7 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
         holder.itemView.setOnClickListener{
             onClickListener?.invoke(photo.id)
         }
+
         holder.bind(photo)
     }
 
@@ -62,31 +64,62 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
     inner class PhotoViewHolder(private val photoItemBinding: PhotoItemBinding):
             RecyclerView.ViewHolder(photoItemBinding.root) {
 
-                fun bind(photo: Photo){
+        fun bind(photo: Photo){
+            setPhotoLayoutParams()
+            setPhoto(photo)
+        }
 
-                    val params = this.itemView.layoutParams
-                    params.width = PhotoLayoutParams.width
-                    params.height = PhotoLayoutParams.width
-                    this.itemView.layoutParams = params
+        private fun setPhotoLayoutParams(){
+            val photoLength = PhotoLayoutParams.getWidth(
+                this.itemView.context.resources.configuration.orientation)
+            val params = this.itemView.layoutParams
 
-                    if(photo.imageUrl.isEmpty()) {
-                        photoItemBinding.photoImageview.visibility = View.GONE
-                        photoItemBinding.coverErrorImageView.visibility = View.VISIBLE
-                    }
-                    else {
-                        photoItemBinding.coverErrorImageView.visibility = View.GONE
-                        photoItemBinding.photoImageview.visibility = View.VISIBLE
-                        photoItemBinding.photoImageview.load(photo.imageUrl) {
-                            crossfade(true)
-                            error(R.drawable.ic_stub_image)
-                            scale(Scale.FILL)
-                        }
-                    }
+            Timber.d("displayMetrics width = ${Resources.getSystem().displayMetrics.widthPixels}")
+            Timber.d("displayMetrics height = ${Resources.getSystem().displayMetrics.heightPixels}")
+            Timber.d("displayMetrics new photoItemBinding height and width = ${photoLength}")
+
+            params.width = photoLength
+            params.height = photoLength
+            this.itemView.layoutParams = params
+        }
+
+        private fun setPhoto(photo: Photo){
+            if(photo.imageUrl.isEmpty()) {
+                photoItemBinding.photoImageview.visibility = View.GONE
+                photoItemBinding.coverErrorImageView.visibility = View.VISIBLE
+            }
+            else {
+                photoItemBinding.coverErrorImageView.visibility = View.GONE
+                photoItemBinding.photoImageview.visibility = View.VISIBLE
+                photoItemBinding.photoImageview.load(photo.imageUrl) {
+                    crossfade(true)
+                    error(R.drawable.ic_stub_image)
+                    scale(Scale.FILL)
                 }
+            }
+        }
+
     }
 
-    object PhotoLayoutParams {
+    fun resetPhotoLayoutParams(){
+        PhotoLayoutParams.photoLength = 0
+    }
 
-        val width = (Resources.getSystem().displayMetrics.widthPixels / NUMBER_OF_COLUMNS) - 1
+    private object PhotoLayoutParams {
+
+        var photoLength: Int = 0
+
+        fun getWidth(orientation: Int): Int {
+
+            if(photoLength == 0) {
+                photoLength = if (orientation == LinearLayoutManager.VERTICAL) {
+                    ((Resources.getSystem().displayMetrics.widthPixels) / NUMBER_OF_COLUMNS) - 2
+                } else {
+                    (Resources.getSystem().displayMetrics.heightPixels / NUMBER_OF_ROWS)
+                }
+            }
+
+            return photoLength
+        }
     }
 }
