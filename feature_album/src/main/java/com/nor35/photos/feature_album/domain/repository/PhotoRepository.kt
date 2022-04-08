@@ -1,8 +1,6 @@
 package com.nor35.photos.feature_album.domain.repository
 
 import com.nor35.photos.feature_album.data.database.PhotoEntity
-import com.nor35.photos.feature_album.data.remote.dto.LoremFlickrDto
-import kotlinx.coroutines.flow.Flow
 
 interface PhotoRepository {
 

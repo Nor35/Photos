@@ -7,11 +7,10 @@ import com.nor35.photos.feature_album.data.remote.PhotoApi
 import com.nor35.photos.feature_album.data.remote.dto.toDataBaseModel
 import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class PhotoRepositoryImp @Inject constructor(
+class PhotoRepositoryImpl @Inject constructor(
     private val photoApi: PhotoApi,
     private val photoDao: PhotoDao
 ): PhotoRepository {

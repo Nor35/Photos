@@ -1,4 +1,4 @@
-package com.nor35.photos
+package com.nor35.photos.feature_album.data.repository
 
 import kotlinx.coroutines.*
 import org.junit.Test
@@ -22,7 +22,6 @@ class ConcurrentRequestsTest {
         runBlocking {
             val tasks = List(n){ async(Dispatchers.IO) { count.addAndGet(longRunningTask()) } }
             tasks.awaitAll()
-
 
             assertEquals(n, count.get())
         }

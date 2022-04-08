@@ -22,19 +22,17 @@ class GetAlbumUseCase @Inject constructor(
             val album = repository.getAlbum().map { it.toDomainModel() }
             emit(Resource.Success<List<Photo>>(album))
         } catch (e: HttpException) {
-//            emit(Resource.Error<List<Photo>>(e.localizedMessage ?: "An unexpected error occured"))
                 emit(getDbAlbumIfExist(e, "An unexpected error occured"))
         } catch (e: IOException) {
-//            emit(Resource.Error<List<Photo>>(e.localizedMessage ?: "Couldn't reach server. Check your internet connection"))
-                emit(getDbAlbumIfExist(e,"Couldn't reach server. Check your internet connection"))
+                emit(getDbAlbumIfExist(e,
+                    "Couldn't reach server. Check your internet connection"))
         } catch (e: Exception) {
-//            emit(Resource.Error<List<Photo>>(e.localizedMessage ?: "Unknown error in GetPhotoUseCase class"))
                 emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
         }
-
     }
 
-    private suspend fun getDbAlbumIfExist(e: Exception, errorMessage: String): Resource<List<Photo>> {
+    private suspend fun getDbAlbumIfExist(e: Exception, errorMessage: String):
+            Resource<List<Photo>> {
 
         val albumFromDB = repository.getAlbumFromDB()
         val message = "Error getting album: ${e.localizedMessage ?: errorMessage}"
