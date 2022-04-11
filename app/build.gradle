@@ -49,8 +49,6 @@ android {
 
 dependencies {
 
-//    implementation project(":feature_album")
-
     // Android
     implementation core.coreKtx
     implementation appcompat.appcompat
@@ -87,5 +85,10 @@ dependencies {
     testImplementation junit.junit
     androidTestImplementation junit_ext.junit_ext
     androidTestImplementation espresso.espresso
+    testImplementation turbine.turbine
+    testImplementation coroutines.test
     testImplementation "io.mockk:mockk:1.12.2"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.robolectric:robolectric:4.5.1"
 }
+
