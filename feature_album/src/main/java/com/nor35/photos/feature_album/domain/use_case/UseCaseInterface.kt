@@ -7,5 +7,4 @@ import kotlinx.coroutines.flow.Flow
 interface UseCaseInterface {
 
     abstract operator fun invoke(): Flow<Resource<List<Photo>>>
-
 }

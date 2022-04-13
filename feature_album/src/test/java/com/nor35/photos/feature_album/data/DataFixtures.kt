@@ -40,7 +40,5 @@ object DataFixtures {
         return photoEntity
     }
 
-    internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum){ getPhotoEntity() }
+    internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum) { getPhotoEntity() }
 }
-
-

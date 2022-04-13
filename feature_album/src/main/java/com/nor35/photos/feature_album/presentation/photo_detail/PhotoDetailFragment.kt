@@ -2,7 +2,9 @@ package com.nor35.photos.feature_album.presentation.photo_detail
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.load
@@ -12,7 +14,6 @@ import com.nor35.photos.feature_album.di.DaggerFeatureAlbumComponent
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class PhotoDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentPhotoDetailBinding
@@ -21,7 +22,8 @@ class PhotoDetailFragment : Fragment() {
     lateinit var photoDetailViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
@@ -43,21 +45,22 @@ class PhotoDetailFragment : Fragment() {
                 binding.photoDetailProgressBar.visibility = View.GONE
 
             if (photoDetailState.error.isNotEmpty())
-                Toast.makeText(this@PhotoDetailFragment.context, photoDetailState.error,
-                    Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@PhotoDetailFragment.context, photoDetailState.error,
+                    Toast.LENGTH_LONG
+                ).show()
 
             if (photoDetailState.photoDetail != null) {
 
                 binding.photoDetailCoverErrorImageView.visibility = View.GONE
                 binding.photodetailImageview.visibility = View.VISIBLE
 
-                binding.photodetailImageview.load(photoDetailState.photoDetail.imageUrl)
-                {
+                binding.photodetailImageview.load(photoDetailState.photoDetail.imageUrl) {
                     crossfade(true)
                 }
 
-                binding.photoDetailWidht.text =  getString(R.string.width_message, photoDetailState.photoDetail.width)
-                binding.photoDetailHeight.text =  getString(R.string.height_message, photoDetailState.photoDetail.height)
+                binding.photoDetailWidht.text = getString(R.string.width_message, photoDetailState.photoDetail.width)
+                binding.photoDetailHeight.text = getString(R.string.height_message, photoDetailState.photoDetail.height)
             }
         }
     }

@@ -1,8 +1,7 @@
 package com.nor35.photos.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.nor35.photos.R
 
 class NavHostActivity : AppCompatActivity() {

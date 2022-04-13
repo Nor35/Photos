@@ -1,6 +1,5 @@
 package com.nor35.photos.feature_album.presentation.photo_detail.state
 
-import com.nor35.photos.feature_album.domain.model.Photo
 import com.nor35.photos.feature_album.domain.model.PhotoDetail
 
 data class PhotoDetailState(

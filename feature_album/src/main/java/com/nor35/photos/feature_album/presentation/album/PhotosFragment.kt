@@ -2,7 +2,12 @@ package com.nor35.photos.feature_album.presentation.album
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,7 +20,6 @@ import com.nor35.photos.feature_album.di.DaggerFeatureAlbumComponent
 import com.nor35.photos.feature_album.presentation.album.recyclerview.PhotoAdapter
 import javax.inject.Inject
 
-
 class PhotosFragment : Fragment() {
 
     private lateinit var binding: FragmentPhotosBinding
@@ -27,7 +31,8 @@ class PhotosFragment : Fragment() {
     lateinit var photoAdapter: PhotoAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
@@ -39,20 +44,23 @@ class PhotosFragment : Fragment() {
         return binding.root
     }
 
-    private fun initAlbumRecyclerview(){
+    private fun initAlbumRecyclerview() {
         photoAdapter.resetPhotoLayoutParams()
 
-        binding.albumRecyclerview.apply{
+        binding.albumRecyclerview.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), getSpanCount(),
-                LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(
+                requireContext(), getSpanCount(),
+                LinearLayoutManager.HORIZONTAL, false
+            )
             adapter = photoAdapter
         }
         photoAdapter.setOnClickListener { photoId: Long ->
-            albumViewModel.navigateToPhotoDetail(photoId) }
+            albumViewModel.navigateToPhotoDetail(photoId)
+        }
     }
 
-    private fun getSpanCount(): Int{
+    private fun getSpanCount(): Int {
         return if (resources.configuration.orientation == LinearLayoutManager.VERTICAL) {
             NUMBER_OF_ROWS
         } else {
@@ -87,11 +95,14 @@ class PhotosFragment : Fragment() {
         when (item.itemId) {
             R.id.action_add_image -> {
                 albumViewModel.getPhoto()
-                if(photoAdapter.itemCount > 0)
-                    binding.albumRecyclerview.postDelayed({
-                        binding.albumRecyclerview
-                            .smoothScrollToPosition(photoAdapter.itemCount - 1)
-                    }, 1000)
+                if (photoAdapter.itemCount > 0)
+                    binding.albumRecyclerview.postDelayed(
+                        {
+                            binding.albumRecyclerview
+                                .smoothScrollToPosition(photoAdapter.itemCount - 1)
+                        },
+                        1000
+                    )
                 true
             }
             R.id.action_reload_all -> {

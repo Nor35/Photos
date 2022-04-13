@@ -15,34 +15,35 @@ import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import dagger.Module
 import dagger.Provides
 
-
 @Module
 class FeatureAlbumDataModule {
 
     @Provides
     @FeatureAlbumScope
-    fun providePhotoDatabase(context: Context): PhotoDatabase{
+    fun providePhotoDatabase(context: Context): PhotoDatabase {
         return Room.databaseBuilder(
             context,
             PhotoDatabase::class.java,
-            PHOTO_DATABASE_NAME)
+            PHOTO_DATABASE_NAME
+        )
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
     @FeatureAlbumScope
-    fun providePhotoDao(db: PhotoDatabase): PhotoDao{
+    fun providePhotoDao(db: PhotoDatabase): PhotoDao {
         return db.getPhotoDao()
     }
 
     @Provides
     @FeatureAlbumScope
-    fun providePhotoRepository(photoApi: PhotoApi
-                               ,photoDao: PhotoDao
+    fun providePhotoRepository(
+        photoApi: PhotoApi,
+        photoDao: PhotoDao
     ): PhotoRepository {
-        return PhotoRepositoryImpl(photoApi
-            , photoDao
+        return PhotoRepositoryImpl(
+            photoApi, photoDao
         )
     }
 
@@ -51,5 +52,4 @@ class FeatureAlbumDataModule {
     fun provideNavController(fragment: Fragment): NavController {
         return fragment.findNavController()
     }
-
 }

@@ -16,10 +16,10 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.flow
-import org.junit.Test
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -40,24 +40,27 @@ class AlbumViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
     }
 
     @Test
     fun init_AlbumViewModel_fetches_PhotoStatel() {
 
-        //given
+        // given
         coEvery {
             mockGetAlbumUseCase.invoke()
         } returns(PresenterFixtures.getPhotoFlow())
 
-        //when
-        viewModel = AlbumViewModel(mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase, mockNavController)
+        // when
+        viewModel = AlbumViewModel(
+            mockGetAlbumUseCase, mockGetPhotoUseCase,
+            mockReloadAllPhotosUseCase, mockNavController
+        )
 
-        //then
-        assertEquals(viewModel.liveData.getOrAwaitValue(),
+        // then
+        assertEquals(
+            viewModel.liveData.getOrAwaitValue(),
             PhotoState(album = PresenterFixtures.getListPhoto())
         )
     }
@@ -65,7 +68,7 @@ class AlbumViewModelTest {
     @Test
     fun getPhoto_fetches_PhotoState() {
 
-        //given
+        // given
         coEvery {
             mockGetAlbumUseCase.invoke()
         } returns flow { emit(Resource.Loading<List<Photo>>()) }
@@ -73,14 +76,18 @@ class AlbumViewModelTest {
             mockGetPhotoUseCase.invoke()
         } returns PresenterFixtures.getPhotoFlow()
 
-        viewModel = AlbumViewModel(mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase, mockNavController)
+        viewModel = AlbumViewModel(
+            mockGetAlbumUseCase, mockGetPhotoUseCase,
+            mockReloadAllPhotosUseCase, mockNavController
+        )
 
-        //when
+        // when
         viewModel.getPhoto()
 
-        //then
-        assertEquals(viewModel.liveData.getOrAwaitValue(),
-            PhotoState(album = PresenterFixtures.getListPhoto()))
+        // then
+        assertEquals(
+            viewModel.liveData.getOrAwaitValue(),
+            PhotoState(album = PresenterFixtures.getListPhoto())
+        )
     }
 }

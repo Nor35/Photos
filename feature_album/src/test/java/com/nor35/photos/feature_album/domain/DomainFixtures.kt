@@ -38,7 +38,5 @@ object DomainFixtures {
         id: Long = _id
     ): PhotoDetail = PhotoDetail(id, imageUrl, width, height)
 
-    internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum){ getPhotoEntity() }
+    internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum) { getPhotoEntity() }
 }
-
-

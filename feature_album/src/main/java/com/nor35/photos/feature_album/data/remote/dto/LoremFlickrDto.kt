@@ -16,4 +16,5 @@ data class LoremFlickrDto(
 fun LoremFlickrDto.toDataBaseModel() = PhotoEntity(
     url = file,
     width = width,
-    height = height)
+    height = height
+)

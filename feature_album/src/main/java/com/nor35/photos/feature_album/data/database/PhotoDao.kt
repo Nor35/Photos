@@ -1,6 +1,9 @@
 package com.nor35.photos.feature_album.data.database
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.nor35.photos.domain.Constants
 import kotlinx.coroutines.flow.Flow
 
@@ -19,11 +22,12 @@ interface PhotoDao {
     @Query("SELECT * FROM ${PhotoEntity.TABLE_NAME} ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomPhoto(): PhotoEntity
 
-    @Query("SELECT * FROM ${PhotoEntity.TABLE_NAME} ORDER BY RANDOM() " +
-            "LIMIT ${Constants.NUMBER_OF_PHOTOS_ON_PAGE}")
+    @Query(
+        "SELECT * FROM ${PhotoEntity.TABLE_NAME} ORDER BY RANDOM() " +
+            "LIMIT ${Constants.NUMBER_OF_PHOTOS_ON_PAGE}"
+    )
     suspend fun getAlbumFromDB(): List<PhotoEntity>
 
     @Query("DELETE FROM ${PhotoEntity.TABLE_NAME}")
     suspend fun deleteAll()
-
 }

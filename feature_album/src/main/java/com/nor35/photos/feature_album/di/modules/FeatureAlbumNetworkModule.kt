@@ -14,13 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-
 @Module
 class FeatureAlbumNetworkModule {
 
     @Provides
     @FeatureAlbumScope
-    fun providePhotoApi(gson: Gson, okHttpClient: OkHttpClient): PhotoApi{
+    fun providePhotoApi(gson: Gson, okHttpClient: OkHttpClient): PhotoApi {
 
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -56,7 +55,8 @@ class FeatureAlbumNetworkModule {
         Timber.plant(Timber.DebugTree())
 
         val interceptor = HttpLoggingInterceptor { message ->
-            Timber.i(message) }
+            Timber.i(message)
+        }
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
 
         return interceptor

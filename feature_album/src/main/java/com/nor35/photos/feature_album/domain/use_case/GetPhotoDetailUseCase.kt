@@ -20,16 +20,28 @@ class GetPhotoDetailUseCase @Inject constructor(
             val photo = repository.getPhoto(photoId).toPhotoDetailDomainModel()
             emit(Resource.Success<PhotoDetail>(photo))
         } catch (e: HttpException) {
-            emit(Resource.Error<PhotoDetail>("Error getting photo detail" +
-                    ": ${e.localizedMessage ?: "An unexpected error occured"}"))
+            emit(
+                Resource.Error<PhotoDetail>(
+                    "Error getting photo detail" +
+                        ": ${e.localizedMessage ?: "An unexpected error occured"}"
+                )
+            )
         } catch (e: IOException) {
-            emit(Resource.Error<PhotoDetail>("Error getting photo detail " +
-                    ": ${e.localizedMessage ?: "Couldn't reach server." +
-                    "Check your internet connection"}"))
+            emit(
+                Resource.Error<PhotoDetail>(
+                    "Error getting photo detail " +
+                        ": ${e.localizedMessage ?: "Couldn't reach server." +
+                            "Check your internet connection"}"
+                )
+            )
         } catch (e: Exception) {
-            emit(Resource.Error<PhotoDetail>("Error getting photo detail " +
-                    ": ${e.localizedMessage ?: "Couldn't reach server." +
-                    "Unknown error in GetPhotoUseCase class"}"))
+            emit(
+                Resource.Error<PhotoDetail>(
+                    "Error getting photo detail " +
+                        ": ${e.localizedMessage ?: "Couldn't reach server." +
+                            "Unknown error in GetPhotoUseCase class"}"
+                )
+            )
         }
     }
 }

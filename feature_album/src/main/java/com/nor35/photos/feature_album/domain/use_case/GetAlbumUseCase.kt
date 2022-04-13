@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class GetAlbumUseCase @Inject constructor(
     private val repository: PhotoRepository
-):UseCaseInterface {
+) : UseCaseInterface {
 
     override operator fun invoke(): Flow<Resource<List<Photo>>> = flow {
 
@@ -22,23 +22,27 @@ class GetAlbumUseCase @Inject constructor(
             val album = repository.getAlbum().map { it.toDomainModel() }
             emit(Resource.Success<List<Photo>>(album))
         } catch (e: HttpException) {
-                emit(getDbAlbumIfExist(e, "An unexpected error occured"))
+            emit(getDbAlbumIfExist(e, "An unexpected error occured"))
         } catch (e: IOException) {
-                emit(getDbAlbumIfExist(e,
-                    "Couldn't reach server. Check your internet connection"))
+            emit(
+                getDbAlbumIfExist(
+                    e,
+                    "Couldn't reach server. Check your internet connection"
+                )
+            )
         } catch (e: Exception) {
-                emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
+            emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
         }
     }
 
     private suspend fun getDbAlbumIfExist(e: Exception, errorMessage: String):
-            Resource<List<Photo>> {
+        Resource<List<Photo>> {
 
         val albumFromDB = repository.getAlbumFromDB()
         val message = "Error getting album: ${e.localizedMessage ?: errorMessage}"
         Timber.e(message)
 
-        return if( albumFromDB == null || albumFromDB.isEmpty())
+        return if (albumFromDB == null || albumFromDB.isEmpty())
             Resource.Error<List<Photo>>(message)
         else
             Resource.Success<List<Photo>>(albumFromDB.map { it.toDomainModel() })

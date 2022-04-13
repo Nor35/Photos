@@ -1,12 +1,10 @@
 plugins {
-    id 'org.jlleitschuh.gradle.ktlint' version '10.1.0'
     id 'com.android.application' version '7.1.2' apply false
     id 'com.android.library' version '7.1.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.0' apply false
     id 'androidx.navigation.safeargs.kotlin' version '2.4.1' apply false
+    id 'org.jlleitschuh.gradle.ktlint' version '10.1.0'
 }
-
-
 
 ext {
 
@@ -100,10 +98,6 @@ ext {
 
     junit_ext = [
             junit_ext: "androidx.test.ext:junit:$versions.junit_ext"
-    ]
-
-    espresso = [
-            espresso: "androidx.test.espresso:espresso-core:$versions.espresso"
     ]
 
     turbine = [

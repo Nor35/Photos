@@ -8,11 +8,10 @@ import com.nor35.photos.feature_album.data.remote.dto.toDataBaseModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.*
-import org.junit.Test
-
-import org.junit.Assert.*
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 
 class PhotoRepositoryImplTest {
 
@@ -25,14 +24,14 @@ class PhotoRepositoryImplTest {
     private lateinit var photoRepositoryImpl: PhotoRepositoryImpl
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
         photoRepositoryImpl = PhotoRepositoryImpl(mockPhotoApi, mockPhotoDao)
     }
 
     @Test
     fun getPhoto_fetches_LoremFlickrDto_convert_toDataBaseModel() {
-        //given
+        // given
         coEvery {
             mockPhotoApi.getPhoto()
         } returns(DataFixtures.getLoremFlickrDto())
@@ -40,10 +39,10 @@ class PhotoRepositoryImplTest {
             mockPhotoDao.insertPhoto(DataFixtures.getLoremFlickrDto().toDataBaseModel())
         } returns(3)
 
-        //when
+        // when
         val result = runBlocking { photoRepositoryImpl.getPhoto() }
 
-        //then
+        // then
         assertEquals(result.width, DataFixtures._width)
         assertEquals(result.height, DataFixtures._height)
         assertEquals(result.url, DataFixtures._file)
@@ -52,15 +51,15 @@ class PhotoRepositoryImplTest {
     @Test
     fun getPhoto_byId_fetches_PhotoEntity() {
 
-        //given
+        // given
         coEvery {
             mockPhotoDao.getPhoto(DataFixtures._id)
         } returns(DataFixtures.getPhotoEntity())
 
-        //when
+        // when
         val result = runBlocking { photoRepositoryImpl.getPhoto(DataFixtures._id) }
 
-        //then
+        // then
         assertEquals(result.id, DataFixtures._id)
         assertEquals(result.width, DataFixtures._width)
         assertEquals(result.height, DataFixtures._height)
@@ -69,7 +68,7 @@ class PhotoRepositoryImplTest {
 
     @Test
     fun getAlbum_fetches_List_PhotoEntity() {
-        //given
+        // given
         coEvery {
             mockPhotoApi.getPhoto()
         } returns(DataFixtures.getLoremFlickrDto())
@@ -77,12 +76,12 @@ class PhotoRepositoryImplTest {
             mockPhotoDao.insertPhoto(DataFixtures.getLoremFlickrDto().toDataBaseModel())
         } returns(DataFixtures._id)
 
-        //when
+        // when
         val result = runBlocking { photoRepositoryImpl.getAlbum() }
 
-        //then
+        // then
         assertEquals(result.size, Constants.NUMBER_OF_PHOTOS_ON_PAGE)
-        for(photoEntity in result){
+        for (photoEntity in result) {
             assertEquals(photoEntity.width, DataFixtures._width)
             assertEquals(photoEntity.height, DataFixtures._height)
             assertEquals(photoEntity.url, DataFixtures._file)
@@ -93,15 +92,15 @@ class PhotoRepositoryImplTest {
     @Test
     fun getRandomPhotoFromDB_fetches_PhotoEntity() {
 
-        //given
+        // given
         coEvery {
             mockPhotoDao.getRandomPhoto()
         } returns(DataFixtures.getPhotoEntity())
 
-        //when
+        // when
         val result = runBlocking { photoRepositoryImpl.getRandomPhotoFromDB() }
 
-        //then
+        // then
         assertEquals(result.id, DataFixtures._id)
         assertEquals(result.width, DataFixtures._width)
         assertEquals(result.height, DataFixtures._height)
@@ -111,22 +110,21 @@ class PhotoRepositoryImplTest {
     @Test
     fun getAlbumFromDB_fetches_PhotoEntity() {
 
-        //given
+        // given
         coEvery {
             mockPhotoDao.getAlbumFromDB()
         } returns(DataFixtures.getAlbum())
 
-        //when
+        // when
         val result = runBlocking { photoRepositoryImpl.getAlbumFromDB() }
 
-        //then
+        // then
         assertEquals(result.size, DataFixtures._numbersOfPhotoOnAlbum)
-        for(photoEntity in result){
+        for (photoEntity in result) {
             assertEquals(photoEntity.width, DataFixtures._width)
             assertEquals(photoEntity.height, DataFixtures._height)
             assertEquals(photoEntity.url, DataFixtures._file)
             assertEquals(photoEntity.id, DataFixtures._id)
         }
     }
-
 }

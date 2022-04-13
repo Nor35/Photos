@@ -6,14 +6,17 @@ import com.nor35.photos.feature_album.data.database.PhotoEntity
 import com.nor35.photos.feature_album.data.remote.PhotoApi
 import com.nor35.photos.feature_album.data.remote.dto.toDataBaseModel
 import com.nor35.photos.feature_album.domain.repository.PhotoRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
 class PhotoRepositoryImpl @Inject constructor(
     private val photoApi: PhotoApi,
     private val photoDao: PhotoDao
-): PhotoRepository {
+) : PhotoRepository {
 
     override suspend fun getPhoto(): PhotoEntity {
 
@@ -32,7 +35,7 @@ class PhotoRepositoryImpl @Inject constructor(
     override suspend fun getAlbum(): List<PhotoEntity> {
 
         return withContext(Dispatchers.IO) {
-            val tasks = List(NUMBER_OF_PHOTOS_ON_PAGE){ async(Dispatchers.IO) { getPhoto() } }
+            val tasks = List(NUMBER_OF_PHOTOS_ON_PAGE) { async(Dispatchers.IO) { getPhoto() } }
             tasks.awaitAll()
         }
     }

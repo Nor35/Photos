@@ -16,7 +16,7 @@ import com.nor35.photos.feature_album.domain.model.Photo
 import timber.log.Timber
 import javax.inject.Inject
 
-class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+class PhotoAdapter @Inject constructor() : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     val photos: ArrayList<Photo> = arrayListOf()
 
@@ -31,7 +31,7 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photo = photos[position]
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onClickListener?.invoke(photo.id)
         }
 
@@ -42,16 +42,16 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
         return photos.size
     }
 
-    fun addPhotos(list: List<Photo>){
+    fun addPhotos(list: List<Photo>) {
         val oldListSize = photos.size
         photos.addAll(list)
-        if(oldListSize == 0)
+        if (oldListSize == 0)
             notifyItemRangeInserted(0, list.size)
         else
             notifyItemRangeInserted(photos.size - list.size, list.size)
     }
 
-    fun deletePhotos(){
+    fun deletePhotos() {
         val oldListSize = photos.size
         photos.clear()
         notifyItemRangeRemoved(0, oldListSize)
@@ -61,34 +61,34 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
         this.onClickListener = listener
     }
 
-    inner class PhotoViewHolder(private val photoItemBinding: PhotoItemBinding):
-            RecyclerView.ViewHolder(photoItemBinding.root) {
+    inner class PhotoViewHolder(private val photoItemBinding: PhotoItemBinding) :
+        RecyclerView.ViewHolder(photoItemBinding.root) {
 
-        fun bind(photo: Photo){
+        fun bind(photo: Photo) {
             setPhotoLayoutParams()
             setPhoto(photo)
         }
 
-        private fun setPhotoLayoutParams(){
+        private fun setPhotoLayoutParams() {
             val photoLength = PhotoLayoutParams.getWidth(
-                this.itemView.context.resources.configuration.orientation)
+                this.itemView.context.resources.configuration.orientation
+            )
             val params = this.itemView.layoutParams
 
             Timber.d("displayMetrics width = ${Resources.getSystem().displayMetrics.widthPixels}")
             Timber.d("displayMetrics height = ${Resources.getSystem().displayMetrics.heightPixels}")
-            Timber.d("displayMetrics new photoItemBinding height and width = ${photoLength}")
+            Timber.d("displayMetrics new photoItemBinding height and width = $photoLength")
 
             params.width = photoLength
             params.height = photoLength
             this.itemView.layoutParams = params
         }
 
-        private fun setPhoto(photo: Photo){
-            if(photo.imageUrl.isEmpty()) {
+        private fun setPhoto(photo: Photo) {
+            if (photo.imageUrl.isEmpty()) {
                 photoItemBinding.photoImageview.visibility = View.GONE
                 photoItemBinding.coverErrorImageView.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 photoItemBinding.coverErrorImageView.visibility = View.GONE
                 photoItemBinding.photoImageview.visibility = View.VISIBLE
                 photoItemBinding.photoImageview.load(photo.imageUrl) {
@@ -98,10 +98,9 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
                 }
             }
         }
-
     }
 
-    fun resetPhotoLayoutParams(){
+    fun resetPhotoLayoutParams() {
         PhotoLayoutParams.photoLength = 0
     }
 
@@ -111,7 +110,7 @@ class PhotoAdapter @Inject constructor(): RecyclerView.Adapter<PhotoAdapter.Phot
 
         fun getWidth(orientation: Int): Int {
 
-            if(photoLength == 0) {
+            if (photoLength == 0) {
                 photoLength = if (orientation == LinearLayoutManager.VERTICAL) {
                     ((Resources.getSystem().displayMetrics.widthPixels) / NUMBER_OF_COLUMNS) - 2
                 } else {

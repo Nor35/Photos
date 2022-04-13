@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class GetPhotoUseCase @Inject constructor(
     private val repository: PhotoRepository
-):UseCaseInterface {
+) : UseCaseInterface {
 
     override operator fun invoke(): Flow<Resource<List<Photo>>> = flow {
 
@@ -24,21 +24,25 @@ class GetPhotoUseCase @Inject constructor(
         } catch (e: HttpException) {
             emit(getDbAlbumIfExist(e, "An unexpected error occured"))
         } catch (e: IOException) {
-            emit(getDbAlbumIfExist(e,
-                "Couldn't reach server. Check your internet connection"))
+            emit(
+                getDbAlbumIfExist(
+                    e,
+                    "Couldn't reach server. Check your internet connection"
+                )
+            )
         } catch (e: Exception) {
             emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
         }
     }
 
     private suspend fun getDbAlbumIfExist(e: Exception, errorMessage: String):
-            Resource<List<Photo>> {
+        Resource<List<Photo>> {
 
         val photoFromDB = repository.getRandomPhotoFromDB()
         val message = "Error getting album: ${e.localizedMessage ?: errorMessage}"
         Timber.e(message)
 
-        return if( photoFromDB == null)
+        return if (photoFromDB == null)
             Resource.Error<List<Photo>>(message)
         else
             Resource.Success<List<Photo>>(listOf(photoFromDB.toDomainModel()))

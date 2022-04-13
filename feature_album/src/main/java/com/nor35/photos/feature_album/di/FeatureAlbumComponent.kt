@@ -17,7 +17,7 @@ interface FeatureAlbumComponent {
     fun inject(photosFragment: PhotoDetailFragment)
 
     @Component.Builder
-    interface AlbumComponentBuilder{
+    interface AlbumComponentBuilder {
         fun buildAlbumComponent(): FeatureAlbumComponent
 
         @BindsInstance

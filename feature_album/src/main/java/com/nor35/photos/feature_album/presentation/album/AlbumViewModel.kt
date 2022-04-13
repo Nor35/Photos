@@ -14,13 +14,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-
 class AlbumViewModel @Inject constructor(
     private val getAlbumUseCase: GetAlbumUseCase,
     private val getPhotoUseCase: GetPhotoUseCase,
     private val getReloadAllPhotosUseCase: ReloadAllPhotosUseCase,
     private val navController: NavController
-): ViewModel() {
+) : ViewModel() {
 
     private val _liveData = MutableLiveData(PhotoState())
     val liveData = _liveData
@@ -37,22 +36,22 @@ class AlbumViewModel @Inject constructor(
         invokeUseCase(getPhotoUseCase)
     }
 
-    fun reloadAllPhotos(){
+    fun reloadAllPhotos() {
         invokeUseCase(getReloadAllPhotosUseCase)
     }
 
-    private fun invokeUseCase(useCase: UseCaseInterface){
+    private fun invokeUseCase(useCase: UseCaseInterface) {
         useCase.invoke().onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     val data = result.data
-                    if(data == null )
+                    if (data == null)
                         _liveData.value = PhotoState(error = "Photos not reseived")
                     else
-                        _liveData.value = PhotoState(album = data  )
+                        _liveData.value = PhotoState(album = data)
                 }
                 is Resource.Error -> {
-                    _liveData.value = PhotoState(error = result.message?:"An unexpected error occured")
+                    _liveData.value = PhotoState(error = result.message ?: "An unexpected error occured")
                 }
                 is Resource.Loading -> {
                     _liveData.value = PhotoState(isLoading = true)

@@ -8,11 +8,11 @@ import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.*
-import org.junit.Test
-
-import org.junit.Assert.*
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Test
 
 class ReloadAllPhotosUseCaseTest {
 
@@ -22,14 +22,14 @@ class ReloadAllPhotosUseCaseTest {
     private lateinit var useCase: ReloadAllPhotosUseCase
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
         useCase = ReloadAllPhotosUseCase(mockPhotoRepository)
     }
 
     @Test
     fun invoke_fetches_ListPhotoEntity_convert_toDomainModel() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getAlbum()
         } returns(DomainFixtures.getAlbum())
@@ -38,17 +38,19 @@ class ReloadAllPhotosUseCaseTest {
         } returns Unit
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
 
                 val resultItem = awaitItem()
                 assertTrue(resultItem is Resource.Success<*>)
-                assertEquals(DomainFixtures.getAlbum().map { it.toDomainModel() },
-                    (resultItem as Resource.Success<*>).data)
+                assertEquals(
+                    DomainFixtures.getAlbum().map { it.toDomainModel() },
+                    (resultItem as Resource.Success<*>).data
+                )
 
                 awaitComplete()
             }
@@ -57,7 +59,7 @@ class ReloadAllPhotosUseCaseTest {
 
     @Test
     fun invoke_getAlbum_throws_Exception_getAlbumFromDB_return_data() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getAlbum()
         } throws Exception()
@@ -69,17 +71,19 @@ class ReloadAllPhotosUseCaseTest {
         } returns Unit
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
 
                 val resultItem = awaitItem()
                 assertTrue(resultItem is Resource.Success<*>)
-                assertEquals(DomainFixtures.getAlbum().map { it.toDomainModel() },
-                    (resultItem as Resource.Success<*>).data)
+                assertEquals(
+                    DomainFixtures.getAlbum().map { it.toDomainModel() },
+                    (resultItem as Resource.Success<*>).data
+                )
 
                 awaitComplete()
             }
@@ -88,7 +92,7 @@ class ReloadAllPhotosUseCaseTest {
 
     @Test
     fun invoke_getAlbum_throws_Exception_getRandomPhotoFromDB_return_null() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getAlbum()
         } throws Exception()
@@ -100,10 +104,10 @@ class ReloadAllPhotosUseCaseTest {
         } returns Unit
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
                 assertTrue(awaitItem() is Resource.Error<*>)
@@ -111,6 +115,4 @@ class ReloadAllPhotosUseCaseTest {
             }
         }
     }
-
-
 }

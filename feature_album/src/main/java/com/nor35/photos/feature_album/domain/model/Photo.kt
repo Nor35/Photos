@@ -1,8 +1,5 @@
 package com.nor35.photos.feature_album.domain.model
 
-import com.nor35.photos.domain.Resource
-import com.nor35.photos.feature_album.data.database.PhotoEntity
-
 data class Photo(
     val id: Long = 0L,
     val imageUrl: String,

@@ -7,11 +7,11 @@ import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.*
-import org.junit.Test
-
-import org.junit.Assert.*
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Test
 
 class GetPhotoUseCaseTest {
 
@@ -21,23 +21,23 @@ class GetPhotoUseCaseTest {
     private lateinit var useCase: GetPhotoUseCase
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
         useCase = GetPhotoUseCase(mockPhotoRepository)
     }
 
     @Test
     fun invoke_fetches_ListPhoto_convert_toDomainModel() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getPhoto()
         } returns(DomainFixtures.getPhotoEntity())
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
 
@@ -52,7 +52,7 @@ class GetPhotoUseCaseTest {
 
     @Test
     fun invoke_getPhoto_throws_Exception_getDbAlbumIfExist_return_data() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getPhoto()
         } throws Exception()
@@ -61,10 +61,10 @@ class GetPhotoUseCaseTest {
         } returns DomainFixtures.getPhotoEntity()
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
 
@@ -79,7 +79,7 @@ class GetPhotoUseCaseTest {
 
     @Test
     fun invoke_getPhoto_throws_Exception_getDbAlbumIfExist_return_null() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getPhoto()
         } throws Exception()
@@ -88,10 +88,10 @@ class GetPhotoUseCaseTest {
         } returns null
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke()
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
                 assertTrue(awaitItem() is Resource.Error<*>)

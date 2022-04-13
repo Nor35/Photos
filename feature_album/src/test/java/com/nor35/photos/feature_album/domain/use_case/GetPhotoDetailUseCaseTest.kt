@@ -7,11 +7,11 @@ import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import kotlinx.coroutines.*
-import org.junit.Test
-
-import org.junit.Assert.*
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Test
 
 class GetPhotoDetailUseCaseTest {
 
@@ -21,23 +21,23 @@ class GetPhotoDetailUseCaseTest {
     private lateinit var useCase: GetPhotoDetailUseCase
 
     @Before
-    fun setUp(){
+    fun setUp() {
         MockKAnnotations.init(this)
         useCase = GetPhotoDetailUseCase(mockPhotoRepository)
     }
 
     @Test
     fun invoke_getPhoto_fetches_ListPhoto_convert_toPhotoDetailDomainModel() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getPhoto(DomainFixtures._id)
         } returns(DomainFixtures.getPhotoEntity())
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke(DomainFixtures._id)
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
 
@@ -52,16 +52,16 @@ class GetPhotoDetailUseCaseTest {
 
     @Test
     fun invoke_getPhoto_throws_Exception() {
-        //given
+        // given
         coEvery {
             mockPhotoRepository.getPhoto(DomainFixtures._id)
         } throws Exception()
 
         runBlocking {
-            //when
+            // when
             val result = useCase.invoke(DomainFixtures._id)
 
-            //then
+            // then
             result.test {
                 assertTrue(awaitItem() is Resource.Loading<*>)
                 assertTrue(awaitItem() is Resource.Error<*>)

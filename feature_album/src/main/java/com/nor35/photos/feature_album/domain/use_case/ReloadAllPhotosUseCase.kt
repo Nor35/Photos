@@ -2,7 +2,6 @@ package com.nor35.photos.feature_album.domain.use_case
 
 import com.nor35.photos.domain.Resource
 import com.nor35.photos.feature_album.data.database.toDomainModel
-import com.nor35.photos.feature_album.data.database.toPhotoDetailDomainModel
 import com.nor35.photos.feature_album.domain.model.Photo
 import com.nor35.photos.feature_album.domain.repository.PhotoRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 class ReloadAllPhotosUseCase @Inject constructor(
     private val repository: PhotoRepository
-): UseCaseInterface {
+) : UseCaseInterface {
 
     override operator fun invoke(): Flow<Resource<List<Photo>>> = flow {
         try {
@@ -25,7 +24,7 @@ class ReloadAllPhotosUseCase @Inject constructor(
         } catch (e: HttpException) {
             emit(getDbAlbumIfExist(e, "An unexpected error occured"))
         } catch (e: IOException) {
-            emit(getDbAlbumIfExist(e,"Couldn't reach server. Check your internet connection"))
+            emit(getDbAlbumIfExist(e, "Couldn't reach server. Check your internet connection"))
         } catch (e: Exception) {
             emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
         }
@@ -37,7 +36,7 @@ class ReloadAllPhotosUseCase @Inject constructor(
         val message = "Error getting album: ${e.localizedMessage ?: errorMessage}"
         Timber.e(message)
 
-        return if( albumFromDB == null || albumFromDB.isEmpty())
+        return if (albumFromDB == null || albumFromDB.isEmpty())
             Resource.Error<List<Photo>>(message)
         else
             Resource.Success<List<Photo>>(albumFromDB.map { it.toDomainModel() })

@@ -4,11 +4,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.nor35.photos.domain.Resource
-import com.nor35.photos.feature_album.data.database.PhotoEntity
 import com.nor35.photos.feature_album.domain.DomainFixtures
 import com.nor35.photos.feature_album.domain.model.Photo
 import com.nor35.photos.feature_album.domain.model.PhotoDetail
-import com.nor35.photos.feature_album.presentation.album.state.PhotoState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.CountDownLatch
@@ -72,7 +70,6 @@ object PresenterFixtures {
             if (!latch.await(time, timeUnit)) {
                 throw TimeoutException("LiveData value was never set.")
             }
-
         } finally {
             this.removeObserver(observer)
         }
@@ -81,5 +78,3 @@ object PresenterFixtures {
         return data as T
     }
 }
-
-
