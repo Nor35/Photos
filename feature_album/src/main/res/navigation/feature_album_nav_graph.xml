@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/albumFragment"
         app:moduleName="feature_album"
-        android:name="com.nor35.photos.feature_album.presentation.album.PhotosFragment"
+        android:name="com.nor35.photos.feature.album.presentation.album.PhotosFragment"
         android:label="fragment_album"
         tools:layout="@layout/fragment_photos" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/photoDetailFragment"
-        android:name="com.nor35.photos.feature_album.presentation.photo_detail.PhotoDetailFragment"
+        android:name="com.nor35.photos.feature.album.presentation.photo.detail.PhotoDetailFragment"
         android:label="PhotoDetailFragment" >
         <argument
             android:name="photoId"

@@ -11,6 +11,9 @@ app/mapping.txt
 # Java class files
 *.class
 
+# Detekt
+c/
+
 # Generated files
 bin/
 gen/
