@@ -5,7 +5,7 @@
 *.ap_
 *.hprof
 app/mapping.txt
-# Files for the Dalvik VM
+# Files for the Dalvik VM 
 *.dex
 
 # Java class files
@@ -55,9 +55,6 @@ com_crashlytics_export_strings.xml
 # [Gradle-Android] ========================
 # Ignore Gradle GUI config
 gradle-app.setting
-
-# Properties
-gradle.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
