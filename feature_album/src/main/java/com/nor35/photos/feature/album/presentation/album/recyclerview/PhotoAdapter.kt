@@ -13,7 +13,6 @@ import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
 import com.nor35.photos.feature.album.domain.model.Photo
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.PhotoItemBinding
-import timber.log.Timber
 import javax.inject.Inject
 
 class PhotoAdapter @Inject constructor() : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
@@ -74,11 +73,6 @@ class PhotoAdapter @Inject constructor() : RecyclerView.Adapter<PhotoAdapter.Pho
                 this.itemView.context.resources.configuration.orientation
             )
             val params = this.itemView.layoutParams
-
-            Timber.d("displayMetrics width = ${Resources.getSystem().displayMetrics.widthPixels}")
-            Timber.d("displayMetrics height = ${Resources.getSystem().displayMetrics.heightPixels}")
-            Timber.d("displayMetrics new photoItemBinding height and width = $photoLength")
-
             params.width = photoLength
             params.height = photoLength
             this.itemView.layoutParams = params
