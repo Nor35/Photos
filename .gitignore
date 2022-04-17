@@ -1,6 +1,6 @@
 # [Android] ========================
 # Built application files
-*.apk
+
 *.aab
 *.ap_
 *.hprof
@@ -33,6 +33,8 @@ proguard/
 # Log Files
 *.log
 
+#Keysotre for generate release apk
+my-keystore.jks
 
 ## Directory-based project format:
 .idea/
