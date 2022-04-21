@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application' version '7.1.2' apply false
     id 'com.android.library' version '7.1.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.6.20' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
     id 'androidx.navigation.safeargs.kotlin' version '2.4.1' apply false
     id 'org.jlleitschuh.gradle.ktlint' version '10.1.0'
     id 'io.gitlab.arturbosch.detekt' version '1.18.1'
@@ -33,10 +33,12 @@ ext {
     ]
 
     versions = [
-            coreKtx: "1.6.0",
+            coreKtx: "1.7.0",
             appcompat: "1.4.1",
             material: "1.4.0",
             recyclerview: "1.2.1",
+            compose: "1.1.1",
+            activity_compose: "1.4.0",
 
             dagger: "2.39",
             constraintLayout: "1.0.2",
@@ -68,6 +70,13 @@ ext {
 
     recyclerview = [
             recyclerview: "androidx.recyclerview:recyclerview:$versions.recyclerview"
+    ]
+
+    compose = [
+            ui: "androidx.compose.ui:ui:$versions.compose",
+            ui_tooling: "androidx.compose.ui:ui-tooling:$versions.compose",
+            material: "androidx.compose.material:material:$versions.compose",
+            activity_compose: "androidx.activity:activity-compose:$versions.activity_compose",
     ]
 
     dagger = [

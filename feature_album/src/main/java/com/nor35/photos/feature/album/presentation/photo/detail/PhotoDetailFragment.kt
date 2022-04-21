@@ -5,18 +5,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import coil.load
+import coil.compose.AsyncImage
 import com.nor35.photos.feature.album.di.DaggerFeatureAlbumComponent
+import com.nor35.photos.feature.album.presentation.photo.detail.ui.theme.MyComposeApplicationTheme
 import com.nor35.photos.feature_album.R
-import com.nor35.photos.feature_album.databinding.FragmentPhotoDetailBinding
 import timber.log.Timber
 import javax.inject.Inject
 
 class PhotoDetailFragment : Fragment() {
-
-    private lateinit var binding: FragmentPhotoDetailBinding
 
     @Inject
     lateinit var photoDetailViewModel: PhotoDetailViewModel
@@ -26,48 +39,70 @@ class PhotoDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        setHasOptionsMenu(true)
-        binding = FragmentPhotoDetailBinding.inflate(inflater, container, false)
 
-        setupPhotoDetailViewModelObserver()
+        val composeView = ComposeView(requireContext()).apply {
+            setContent {
+                MyComposeApplicationTheme {
+                    Surface(color = MaterialTheme.colors.background) {
+                        SetupPhotoDetailViewModelObserver()
+                    }
+                }
+            }
+        }
         val photoId = requireArguments().getLong(this.resources.getString(R.string.photoId))
         photoDetailViewModel.getPhoto(photoId)
 
-        return binding.root
+        return composeView
     }
 
-    private fun setupPhotoDetailViewModelObserver() {
+    @Composable
+    private fun SetupPhotoDetailViewModelObserver() {
 
-        photoDetailViewModel.liveData.observe(viewLifecycleOwner) { photoDetailState ->
-            if (photoDetailState.isLoading)
-                binding.photoDetailProgressBar.visibility = View.VISIBLE
-            else
-                binding.photoDetailProgressBar.visibility = View.GONE
+        val state = photoDetailViewModel.mutableState.value
 
-            if (photoDetailState.error.isNotEmpty())
-                Toast.makeText(
-                    this@PhotoDetailFragment.context, photoDetailState.error,
-                    Toast.LENGTH_LONG
-                ).show()
+        Box(modifier = Modifier.fillMaxSize()) {
+            state.photoDetail?.let { photoDetail ->
+                Column(modifier = Modifier.align(Alignment.Center)) {
 
-            if (photoDetailState.photoDetail != null) {
-
-                binding.photoDetailCoverErrorImageView.visibility = View.GONE
-                binding.photodetailImageview.visibility = View.VISIBLE
-
-                binding.photodetailImageview.load(photoDetailState.photoDetail.imageUrl) {
-                    crossfade(true)
+                    AsyncImage(
+                        model = photoDetail.imageUrl,
+                        contentDescription = null,
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        placeholder = painterResource(R.drawable.ic_stub_image),
+                        error = painterResource(R.drawable.ic_error_image)
+                    )
+                    Text(
+                        text = getString(R.string.width_message, photoDetail.width),
+                        modifier = Modifier.padding(8.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = getString(R.string.height_message, photoDetail.height),
+                        modifier = Modifier.padding(8.dp),
+                        textAlign = TextAlign.Center
+                    )
                 }
-
-                binding.photoDetailWidht.text = getString(R.string.width_message, photoDetailState.photoDetail.width)
-                binding.photoDetailHeight.text = getString(R.string.height_message, photoDetailState.photoDetail.height)
             }
+
+            if (state.isLoading)
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+
+            if (state.error.isNotBlank())
+                Text(
+                    text = state.error,
+                    color = MaterialTheme.colors.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                        .align(Alignment.Center)
+                )
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        photoDetailViewModel.liveData.value?.photoDetail?.let {
+        photoDetailViewModel.mutableState.value.photoDetail?.let {
             outState.putLong(this.resources.getString(R.string.photoId), it.id)
             Timber.d("Save photoId with id = ${it.id}")
         }

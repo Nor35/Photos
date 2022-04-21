@@ -1,6 +1,6 @@
 package com.nor35.photos.feature.album.presentation.photo.detail
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nor35.photos.domain.Resource
@@ -14,8 +14,8 @@ class PhotoDetailViewModel @Inject constructor(
     private val getPhotoDetailUseCase: GetPhotoDetailUseCase
 ) : ViewModel() {
 
-    private val _liveData = MutableLiveData(PhotoDetailState())
-    val liveData = _liveData
+    private val _mutableState = mutableStateOf(PhotoDetailState())
+    val mutableState = _mutableState
 
     fun getPhoto(photoId: Long) {
         getPhotoDetailUseCase.invoke(photoId).onEach { result ->
@@ -23,15 +23,15 @@ class PhotoDetailViewModel @Inject constructor(
                 is Resource.Success -> {
                     val data = result.data
                     if (data == null)
-                        _liveData.value = PhotoDetailState(error = "Photos not reseived")
+                        _mutableState.value = PhotoDetailState(error = "Photos not reseived")
                     else
-                        _liveData.value = PhotoDetailState(photoDetail = data)
+                        _mutableState.value = PhotoDetailState(photoDetail = data)
                 }
                 is Resource.Error -> {
-                    _liveData.value = PhotoDetailState(error = result.message ?: "An unexpected error occured")
+                    _mutableState.value = PhotoDetailState(error = result.message ?: "An unexpected error occured")
                 }
                 is Resource.Loading -> {
-                    _liveData.value = PhotoDetailState(isLoading = true)
+                    _mutableState.value = PhotoDetailState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

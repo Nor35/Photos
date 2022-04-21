@@ -2,14 +2,16 @@ package com.nor35.photos.feature.album.presenter.photo.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.test
 import com.nor35.photos.feature.album.domain.usecase.GetPhotoDetailUseCase
 import com.nor35.photos.feature.album.presentation.photo.detail.PhotoDetailViewModel
 import com.nor35.photos.feature.album.presentation.photo.detail.state.PhotoDetailState
 import com.nor35.photos.feature.album.presenter.PresenterFixtures
-import com.nor35.photos.feature.album.presenter.PresenterFixtures.getOrAwaitValue
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -41,13 +43,21 @@ class PhotoDetailViewModelTest {
             getPhotoDetailUseCase.invoke(PresenterFixtures._id)
         } returns(PresenterFixtures.getPhotoDetailFlow())
 
-        // when
-        viewModel.getPhoto(PresenterFixtures._id)
+        runBlocking {
+            // when
+            viewModel.getPhoto(PresenterFixtures._id)
 
-        // then
-        assertEquals(
-            viewModel.liveData.getOrAwaitValue(),
-            PhotoDetailState(photoDetail = PresenterFixtures.getPhotoDetail())
-        )
+            // then
+            val mutableStateFlow = MutableStateFlow(viewModel.mutableState)
+            mutableStateFlow.test {
+
+                val resultItem = awaitItem()
+                assertEquals(
+                    PhotoDetailState(photoDetail = PresenterFixtures.getPhotoDetail()),
+                    resultItem.value
+                )
+                cancelAndConsumeRemainingEvents()
+            }
+        }
     }
 }

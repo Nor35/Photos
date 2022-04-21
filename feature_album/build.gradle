@@ -42,6 +42,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion versions.compose
+        kotlinCompilerVersion versions.coreKtx
+    }
 }
 
 dependencies {
@@ -54,6 +63,12 @@ dependencies {
     implementation material.material
     implementation constraintlayout.constraintlayout
     implementation recyclerview.recyclerview
+
+    //Compose
+    implementation compose.ui
+    debugImplementation compose.ui_tooling
+    implementation compose.material
+    implementation compose.activity_compose
 
     //Dagger
     implementation dagger.dagger
@@ -68,6 +83,7 @@ dependencies {
 
     //Coil
     implementation("io.coil-kt:coil:2.0.0-rc02")
+    implementation("io.coil-kt:coil-compose:2.0.0-rc02")
 
     //Room
     implementation room.roomKtx
