@@ -1,7 +1,7 @@
 package com.nor35.photos.feature.album.data
 
-import com.nor35.photos.feature.album.data.database.PhotoEntity
-import com.nor35.photos.feature.album.data.remote.dto.LoremFlickrDto
+import com.nor35.photos.data.database.PhotoEntity
+import com.nor35.photos.data.remote.dto.LoremFlickrDto
 
 object DataFixtures {
 

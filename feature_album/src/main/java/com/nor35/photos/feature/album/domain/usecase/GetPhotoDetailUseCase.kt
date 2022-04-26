@@ -1,9 +1,9 @@
 package com.nor35.photos.feature.album.domain.usecase
 
 import com.nor35.photos.domain.Resource
-import com.nor35.photos.feature.album.data.database.toPhotoDetailDomainModel
 import com.nor35.photos.feature.album.domain.model.PhotoDetail
-import com.nor35.photos.feature.album.domain.repository.PhotoRepository
+import com.nor35.photos.domain.repository.PhotoRepository
+import com.nor35.photos.feature.album.domain.model.toPhotoDetailDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

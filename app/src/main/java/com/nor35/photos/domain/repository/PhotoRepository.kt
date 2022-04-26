@@ -1,8 +1,9 @@
-package com.nor35.photos.feature.album.domain.repository
+package com.nor35.photos.domain.repository
 
 import com.nor35.photos.data.database.PhotoEntity
 
 interface PhotoRepository {
+
 
     suspend fun getPhoto(): PhotoEntity
 

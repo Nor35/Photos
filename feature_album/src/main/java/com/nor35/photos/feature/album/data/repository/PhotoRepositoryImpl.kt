@@ -1,11 +1,11 @@
 package com.nor35.photos.feature.album.data.repository
 
 import com.nor35.photos.domain.Constants.NUMBER_OF_PHOTOS_ON_PAGE
-import com.nor35.photos.feature.album.data.database.PhotoDao
-import com.nor35.photos.feature.album.data.database.PhotoEntity
-import com.nor35.photos.feature.album.data.remote.PhotoApi
-import com.nor35.photos.feature.album.data.remote.dto.toDataBaseModel
-import com.nor35.photos.feature.album.domain.repository.PhotoRepository
+import com.nor35.photos.data.database.PhotoDao
+import com.nor35.photos.data.database.PhotoEntity
+import com.nor35.photos.data.remote.PhotoApi
+import com.nor35.photos.data.remote.dto.toDataBaseModel
+import com.nor35.photos.domain.repository.PhotoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

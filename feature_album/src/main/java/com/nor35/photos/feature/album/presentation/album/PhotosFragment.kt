@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nor35.photos.PhotosApplication
 import com.nor35.photos.domain.Constants.DELAY_WHEN_ADDING_ONE_PICTURE
 import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
 import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
@@ -57,7 +59,7 @@ class PhotosFragment : Fragment() {
             adapter = photoAdapter
         }
         photoAdapter.setOnClickListener { photoId: Long ->
-            albumViewModel.navigateToPhotoDetail(photoId)
+            albumViewModel.navigateToPhotoDetail(photoId, findNavController())
         }
     }
 
@@ -116,10 +118,13 @@ class PhotosFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        val appComponent = (activity?.applicationContext as PhotosApplication).appComponent
+
         DaggerFeatureAlbumComponent
             .builder()
-            .bindContext(context)
-            .bindFragment(this)
+            .bindContext(this.requireContext())
+            .bindAppComponent(appComponent)
             .buildAlbumComponent()
             .inject(this)
     }

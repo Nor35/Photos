@@ -31,8 +31,6 @@ class AlbumViewModelTest {
     internal lateinit var mockGetPhotoUseCase: GetPhotoUseCase
     @MockK
     internal lateinit var mockReloadAllPhotosUseCase: ReloadAllPhotosUseCase
-    @MockK
-    internal lateinit var mockNavController: NavController
 
     private lateinit var viewModel: AlbumViewModel
 
@@ -55,7 +53,7 @@ class AlbumViewModelTest {
         // when
         viewModel = AlbumViewModel(
             mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase, mockNavController
+            mockReloadAllPhotosUseCase
         )
 
         // then
@@ -78,7 +76,7 @@ class AlbumViewModelTest {
 
         viewModel = AlbumViewModel(
             mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase, mockNavController
+            mockReloadAllPhotosUseCase
         )
 
         // when

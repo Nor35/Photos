@@ -1,6 +1,6 @@
-package com.nor35.photos.feature.album.data.remote
+package com.nor35.photos.data.remote
 
-import com.nor35.photos.feature.album.data.remote.dto.LoremFlickrDto
+import com.nor35.photos.data.remote.dto.LoremFlickrDto
 import retrofit2.http.GET
 
 interface PhotoApi {

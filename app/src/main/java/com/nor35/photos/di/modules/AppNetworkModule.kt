@@ -1,11 +1,11 @@
-package com.nor35.photos.feature.album.di.modules
+package com.nor35.photos.di.modules
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nor35.photos.domain.Constants
 import com.nor35.photos.domain.Constants.MY_NETWORK_TIMEOUT
-import com.nor35.photos.feature.album.data.remote.PhotoApi
-import com.nor35.photos.feature.album.di.FeatureAlbumScope
+import com.nor35.photos.data.remote.PhotoApi
+import com.nor35.photos.di.AppScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -16,10 +16,10 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 @Module
-class FeatureAlbumNetworkModule {
+class AppNetworkModule {
 
     @Provides
-    @FeatureAlbumScope
+    @AppScope
     fun providePhotoApi(gson: Gson, okHttpClient: OkHttpClient): PhotoApi {
 
         return Retrofit.Builder()
@@ -31,7 +31,7 @@ class FeatureAlbumNetworkModule {
     }
 
     @Provides
-    @FeatureAlbumScope
+    @AppScope
     fun provideGson(): Gson {
         return GsonBuilder()
             .setLenient()
@@ -39,7 +39,7 @@ class FeatureAlbumNetworkModule {
     }
 
     @Provides
-    @FeatureAlbumScope
+    @AppScope
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient()
             .newBuilder()
@@ -50,7 +50,7 @@ class FeatureAlbumNetworkModule {
     }
 
     @Provides
-    @FeatureAlbumScope
+    @AppScope
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
 
         Timber.plant(Timber.DebugTree())
