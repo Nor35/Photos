@@ -1,6 +1,5 @@
 package com.nor35.photos.feature.album.presenter.photo.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.nor35.photos.feature.album.domain.usecase.GetPhotoDetailUseCase
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -26,13 +24,9 @@ class PhotoDetailViewModelTest {
 
     private lateinit var viewModel: PhotoDetailViewModel
 
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        viewModel = PhotoDetailViewModel(getPhotoDetailUseCase)
     }
 
     @Test
@@ -43,11 +37,12 @@ class PhotoDetailViewModelTest {
             getPhotoDetailUseCase.invoke(PresenterFixtures._id)
         } returns(PresenterFixtures.getPhotoDetailFlow())
 
-        runBlocking {
-            // when
-            viewModel.getPhoto(PresenterFixtures._id)
+        // when
+        viewModel = PhotoDetailViewModel(getPhotoDetailUseCase, PresenterFixtures._id)
 
-            // then
+        // then
+        runBlocking {
+
             val mutableStateFlow = MutableStateFlow(viewModel.mutableState)
             mutableStateFlow.test {
 
