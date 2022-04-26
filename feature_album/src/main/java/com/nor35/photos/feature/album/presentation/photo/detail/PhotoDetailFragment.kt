@@ -11,7 +11,6 @@ import coil.load
 import com.nor35.photos.feature.album.di.DaggerFeatureAlbumComponent
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.FragmentPhotoDetailBinding
-import timber.log.Timber
 import javax.inject.Inject
 
 class PhotoDetailFragment : Fragment() {
@@ -19,6 +18,8 @@ class PhotoDetailFragment : Fragment() {
     private lateinit var binding: FragmentPhotoDetailBinding
 
     @Inject
+    lateinit var photoDetailViewModelFactory: PhotoDetailViewModelFactory
+
     lateinit var photoDetailViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
@@ -29,9 +30,9 @@ class PhotoDetailFragment : Fragment() {
         setHasOptionsMenu(true)
         binding = FragmentPhotoDetailBinding.inflate(inflater, container, false)
 
-        setupPhotoDetailViewModelObserver()
         val photoId = requireArguments().getLong(this.resources.getString(R.string.photoId))
-        photoDetailViewModel.getPhoto(photoId)
+        photoDetailViewModel = photoDetailViewModelFactory.create(photoId)
+        setupPhotoDetailViewModelObserver()
 
         return binding.root
     }
@@ -62,14 +63,6 @@ class PhotoDetailFragment : Fragment() {
                 binding.photoDetailWidht.text = getString(R.string.width_message, photoDetailState.photoDetail.width)
                 binding.photoDetailHeight.text = getString(R.string.height_message, photoDetailState.photoDetail.height)
             }
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        photoDetailViewModel.liveData.value?.photoDetail?.let {
-            outState.putLong(this.resources.getString(R.string.photoId), it.id)
-            Timber.d("Save photoId with id = ${it.id}")
         }
     }
 

@@ -1,6 +1,5 @@
 package com.nor35.photos.feature.album.presenter.photo.detail
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nor35.photos.feature.album.domain.usecase.GetPhotoDetailUseCase
 import com.nor35.photos.feature.album.presentation.photo.detail.PhotoDetailViewModel
@@ -12,7 +11,6 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -24,13 +22,9 @@ class PhotoDetailViewModelTest {
 
     private lateinit var viewModel: PhotoDetailViewModel
 
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        viewModel = PhotoDetailViewModel(getPhotoDetailUseCase)
     }
 
     @Test
@@ -42,7 +36,7 @@ class PhotoDetailViewModelTest {
         } returns(PresenterFixtures.getPhotoDetailFlow())
 
         // when
-        viewModel.getPhoto(PresenterFixtures._id)
+        viewModel = PhotoDetailViewModel(getPhotoDetailUseCase, PresenterFixtures._id)
 
         // then
         assertEquals(
