@@ -19,6 +19,7 @@ import com.nor35.photos.feature.album.di.DaggerFeatureAlbumComponent
 import com.nor35.photos.feature.album.presentation.album.recyclerview.PhotoAdapter
 import com.nor35.photos.feature_album.R
 import com.nor35.photos.feature_album.databinding.FragmentPhotosBinding
+import timber.log.Timber
 import javax.inject.Inject
 
 class PhotosFragment : Fragment() {

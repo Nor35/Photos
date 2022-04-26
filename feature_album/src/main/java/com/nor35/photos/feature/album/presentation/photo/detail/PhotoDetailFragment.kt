@@ -32,6 +32,8 @@ import javax.inject.Inject
 class PhotoDetailFragment : Fragment() {
 
     @Inject
+    lateinit var photoDetailViewModelFactory: PhotoDetailViewModelFactory
+
     lateinit var photoDetailViewModel: PhotoDetailViewModel
 
     override fun onCreateView(
@@ -40,7 +42,10 @@ class PhotoDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val composeView = ComposeView(requireContext()).apply {
+        val photoId = requireArguments().getLong(this.resources.getString(R.string.photoId))
+        photoDetailViewModel = photoDetailViewModelFactory.create(photoId)
+
+        return ComposeView(requireContext()).apply {
             setContent {
                 MyComposeApplicationTheme {
                     Surface(color = MaterialTheme.colors.background) {
@@ -49,10 +54,6 @@ class PhotoDetailFragment : Fragment() {
                 }
             }
         }
-        val photoId = requireArguments().getLong(this.resources.getString(R.string.photoId))
-        photoDetailViewModel.getPhoto(photoId)
-
-        return composeView
     }
 
     @Composable
@@ -97,14 +98,6 @@ class PhotoDetailFragment : Fragment() {
                         .padding(horizontal = 20.dp)
                         .align(Alignment.Center)
                 )
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        photoDetailViewModel.mutableState.value.photoDetail?.let {
-            outState.putLong(this.resources.getString(R.string.photoId), it.id)
-            Timber.d("Save photoId with id = ${it.id}")
         }
     }
 
