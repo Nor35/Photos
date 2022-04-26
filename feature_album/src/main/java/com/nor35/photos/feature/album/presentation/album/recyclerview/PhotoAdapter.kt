@@ -10,9 +10,9 @@ import coil.load
 import coil.size.Scale
 import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
 import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
+import com.nor35.photos.feature.album.R
+import com.nor35.photos.feature.album.databinding.PhotoItemBinding
 import com.nor35.photos.feature.album.domain.model.Photo
-import com.nor35.photos.feature_album.R
-import com.nor35.photos.feature_album.databinding.PhotoItemBinding
 import javax.inject.Inject
 
 class PhotoAdapter @Inject constructor() : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {

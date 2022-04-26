@@ -3,8 +3,8 @@ package com.nor35.photos.feature.album.domain.usecase
 import app.cash.turbine.test
 import com.nor35.photos.domain.Resource
 import com.nor35.photos.feature.album.domain.DomainFixtures
-import com.nor35.photos.domain.repository.PhotoRepository
 import com.nor35.photos.feature.album.domain.model.toDomainModel
+import com.nor35.photos.feature.album.domain.repository.PhotoRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

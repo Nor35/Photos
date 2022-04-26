@@ -31,7 +31,11 @@ android {
         }
     }
 
-    dynamicFeatures = [':feature_album']
+    viewBinding {
+        enabled = true
+    }
+
+    dynamicFeatures = [':feature_album', ':feature_photo_detail']
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -45,44 +49,56 @@ android {
 
 dependencies {
 
+    // Libraries which can be re-used in other modules should use the `api` keyword.
+    // This way they can be shared with dependent feature modules.
+
     // Android
-    implementation core.coreKtx
-    implementation appcompat.appcompat
-    implementation material.material
-    implementation constraintlayout.constraintlayout
-    implementation recyclerview.recyclerview
+    api core.coreKtx
+    api appcompat.appcompat
+    api material.material
+    api constraintlayout.constraintlayout
+    api recyclerview.recyclerview
 
     //Dagger
-    implementation dagger.dagger
-    implementation dagger.daggerCompiler
+    api dagger.dagger
+    api dagger.daggerCompiler
 
     //Network
-    implementation retrofit2.retrofit2
-    implementation retrofit2.converterGson
-    implementation okhttp3.okhttp3
-    implementation okhttp3.okhttp3_logging
-    implementation timber.timber
+    api retrofit2.retrofit2
+    api retrofit2.converterGson
+    api okhttp3.okhttp3
+    api okhttp3.okhttp3_logging
+    api timber.timber
 
     //Coil
-    implementation("io.coil-kt:coil:2.0.0-rc02")
+    api("io.coil-kt:coil:2.0.0-rc02")
 
     //Room
-    implementation room.roomKtx
-    implementation room.roomRutime
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api room.roomKtx
+    api room.roomRutime
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt room.compiler
 
     //Navigation
-    implementation navigation.navigationFragmentKtx
-    implementation navigation.navigationUiKtx
-    implementation navigation.navigationDynamicFeatureFragment
+    api navigation.navigationFragmentKtx
+    api navigation.navigationUiKtx
+    api navigation.navigationDynamicFeatureFragment
 
     //Tests
+    api junit.junit
+    api junit_ext.junit_ext
+    api turbine.turbine
+    api coroutines.test
+    api "io.mockk:mockk:1.12.2"
+    api "androidx.arch.core:core-testing:2.1.0"
+    api "org.robolectric:robolectric:4.5.1"
+
+    // When using API in base, some dependencies might have to be re-added for test implementation.
     testImplementation junit.junit
     androidTestImplementation junit_ext.junit_ext
     testImplementation turbine.turbine
     testImplementation coroutines.test
-    testImplementation "io.mockk:mockk:1.12.2"
+    testImplementation "io.mockk:mockk-android:1.12.2"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.robolectric:robolectric:4.5.1"
 }

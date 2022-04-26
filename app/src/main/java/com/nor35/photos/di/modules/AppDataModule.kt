@@ -2,10 +2,10 @@ package com.nor35.photos.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.nor35.photos.domain.Constants.PHOTO_DATABASE_NAME
 import com.nor35.photos.data.database.PhotoDao
 import com.nor35.photos.data.database.PhotoDatabase
 import com.nor35.photos.di.AppScope
+import com.nor35.photos.domain.Constants.PHOTO_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 

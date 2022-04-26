@@ -1,7 +1,6 @@
 package com.nor35.photos.feature.album.presenter.album
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.navigation.NavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nor35.photos.domain.Resource
 import com.nor35.photos.feature.album.domain.model.Photo

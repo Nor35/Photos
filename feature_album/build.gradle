@@ -49,43 +49,43 @@ dependencies {
     implementation project(":app")
 
     // Android
-    implementation core.coreKtx
-    implementation appcompat.appcompat
-    implementation material.material
-    implementation constraintlayout.constraintlayout
-    implementation recyclerview.recyclerview
+//    implementation core.coreKtx
+//    implementation appcompat.appcompat
+//    implementation material.material
+//    implementation constraintlayout.constraintlayout
+//    implementation recyclerview.recyclerview
 
-    //Dagger
-    implementation dagger.dagger
-    implementation dagger.daggerCompiler
-
-    //Network
-    implementation retrofit2.converterGson
-    implementation retrofit2.retrofit2
-    implementation okhttp3.okhttp3
-    implementation okhttp3.okhttp3_logging
-    implementation timber.timber
-
-    //Coil
-    implementation("io.coil-kt:coil:2.0.0-rc02")
+//    //Dagger
+//    implementation dagger.dagger
+//    implementation dagger.daggerCompiler
+//
+//    //Network
+//    implementation retrofit2.converterGson
+//    implementation retrofit2.retrofit2
+//    implementation okhttp3.okhttp3
+//    implementation okhttp3.okhttp3_logging
+//    implementation timber.timber
+//
+//    //Coil
+//    implementation("io.coil-kt:coil:2.0.0-rc02")
 
     //Room
 //    implementation room.roomKtx
 //    implementation room.roomRutime
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt room.compiler
 
     //Navigation
-    implementation navigation.navigationFragmentKtx
-    implementation navigation.navigationUiKtx
-    implementation navigation.navigationDynamicFeatureFragment
+//    implementation navigation.navigationFragmentKtx
+//    implementation navigation.navigationUiKtx
+//    implementation navigation.navigationDynamicFeatureFragment
 
     //Tests
     testImplementation junit.junit
     implementation junit_ext.junit_ext
     testImplementation turbine.turbine
     testImplementation coroutines.test
-    testImplementation "io.mockk:mockk:1.12.2"
+    testImplementation "io.mockk:mockk-android:1.12.2"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.robolectric:robolectric:4.5.1"
 }

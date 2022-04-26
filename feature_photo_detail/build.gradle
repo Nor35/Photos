@@ -1,0 +1,91 @@
+plugins {
+    id 'com.android.dynamic-feature'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'org.jlleitschuh.gradle.ktlint'
+}
+
+android {
+    compileSdk androidConfig.compile_sdk_version
+
+    defaultConfig {
+        minSdk androidConfig.min_sdk_version
+        targetSdk androidConfig.target_sdk_version
+        versionCode androidConfig.version_code
+        versionName androidConfig.version_name
+
+        testInstrumentationRunner androidConfig.test_instrumentation_runner
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    viewBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+
+    implementation project(":app")
+
+    // Android
+//    implementation core.coreKtx
+//    implementation appcompat.appcompat
+//    implementation material.material
+//    implementation constraintlayout.constraintlayout
+//    implementation recyclerview.recyclerview
+//
+//    //Dagger
+//    implementation dagger.dagger
+//    implementation dagger.daggerCompiler
+//
+//    //Network
+//    implementation retrofit2.converterGson
+//    implementation retrofit2.retrofit2
+//    implementation okhttp3.okhttp3
+//    implementation okhttp3.okhttp3_logging
+//    implementation timber.timber
+//
+//    //Coil
+//    implementation("io.coil-kt:coil:2.0.0-rc02")
+//
+//    //Room
+////    implementation room.roomKtx
+////    implementation room.roomRutime
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt room.compiler
+
+    //Navigation
+//    implementation navigation.navigationFragmentKtx
+//    implementation navigation.navigationUiKtx
+//    implementation navigation.navigationDynamicFeatureFragment
+
+    //Tests
+    testImplementation junit.junit
+    implementation junit_ext.junit_ext
+    testImplementation turbine.turbine
+    testImplementation coroutines.test
+    testImplementation "io.mockk:mockk-android:1.12.2"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.robolectric:robolectric:4.5.1"
+}

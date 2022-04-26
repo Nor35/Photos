@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Photos</string>
+    <string name="hello_blank_fragment_2">Hello blank fragment 2</string>
+    <string name="feature_photo_detail">feature photo detail</string>
+    <string name="add_image">+1</string>
+    <string name="reload_all">Reload All</string>
+    <string name="photoId">photoId</string>
+
+    <string name="width_message">Width photo = %1$d</string>
+    <string name="height_message">Height photo = %1$d</string>
+</resources>
