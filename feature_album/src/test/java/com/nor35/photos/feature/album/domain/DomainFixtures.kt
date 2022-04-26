@@ -1,6 +1,6 @@
 package com.nor35.photos.feature.album.domain
 
-import com.nor35.photos.feature.album.data.database.PhotoEntity
+import com.nor35.photos.data.database.PhotoEntity
 import com.nor35.photos.feature.album.domain.model.Photo
 import com.nor35.photos.feature.album.domain.model.PhotoDetail
 

@@ -53,24 +53,24 @@ dependencies {
     implementation recyclerview.recyclerview
 
     //Dagger
-//    implementation dagger.dagger
-//    implementation dagger.daggerCompiler
+    implementation dagger.dagger
+    implementation dagger.daggerCompiler
 
     //Network
-//    implementation retrofit2.retrofit2
-//    implementation retrofit2.converterGson
-//    implementation okhttp3.okhttp3
-//    implementation okhttp3.okhttp3_logging
+    implementation retrofit2.retrofit2
+    implementation retrofit2.converterGson
+    implementation okhttp3.okhttp3
+    implementation okhttp3.okhttp3_logging
     implementation timber.timber
 
     //Coil
     implementation("io.coil-kt:coil:2.0.0-rc02")
 
     //Room
-//    implementation room.roomKtx
-//    implementation room.roomRutime
+    implementation room.roomKtx
+    implementation room.roomRutime
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-//    kapt room.compiler
+    kapt room.compiler
 
     //Navigation
     implementation navigation.navigationFragmentKtx

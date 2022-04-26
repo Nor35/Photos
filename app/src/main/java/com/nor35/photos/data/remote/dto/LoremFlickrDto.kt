@@ -1,6 +1,6 @@
-package com.nor35.photos.feature.album.data.remote.dto
+package com.nor35.photos.data.remote.dto
 
-import com.nor35.photos.feature.album.data.database.PhotoEntity
+import com.nor35.photos.data.database.PhotoEntity
 
 data class LoremFlickrDto(
     val file: String,

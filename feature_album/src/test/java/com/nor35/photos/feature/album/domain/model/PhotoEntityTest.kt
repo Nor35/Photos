@@ -1,7 +1,5 @@
 package com.nor35.photos.feature.album.domain.model
 
-import com.nor35.photos.feature.album.data.database.toDomainModel
-import com.nor35.photos.feature.album.data.database.toPhotoDetailDomainModel
 import com.nor35.photos.feature.album.domain.DomainFixtures
 import org.junit.Assert.assertEquals
 import org.junit.Test

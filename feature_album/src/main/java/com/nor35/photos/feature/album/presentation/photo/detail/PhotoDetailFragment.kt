@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import coil.compose.AsyncImage
+import com.nor35.photos.PhotosApplication
 import com.nor35.photos.feature.album.di.DaggerFeatureAlbumComponent
 import com.nor35.photos.feature.album.presentation.photo.detail.ui.theme.MyComposeApplicationTheme
 import com.nor35.photos.feature_album.R
@@ -102,10 +103,13 @@ class PhotoDetailFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        val appComponent = (activity?.applicationContext as PhotosApplication).appComponent
+
         DaggerFeatureAlbumComponent
             .builder()
-            .bindContext(context)
-            .bindFragment(this)
+            .bindContext(this.requireContext())
+            .bindAppComponent(appComponent)
             .buildAlbumComponent()
             .inject(this)
     }

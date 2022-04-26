@@ -17,8 +17,7 @@ import javax.inject.Inject
 class AlbumViewModel @Inject constructor(
     private val getAlbumUseCase: GetAlbumUseCase,
     private val getPhotoUseCase: GetPhotoUseCase,
-    private val getReloadAllPhotosUseCase: ReloadAllPhotosUseCase,
-    private val navController: NavController
+    private val getReloadAllPhotosUseCase: ReloadAllPhotosUseCase
 ) : ViewModel() {
 
     private val _liveData = MutableLiveData(PhotoState())
@@ -60,7 +59,7 @@ class AlbumViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun navigateToPhotoDetail(photoId: Long) {
+    fun navigateToPhotoDetail(photoId: Long, navController: NavController) {
 
         val navDirections = PhotosFragmentDirections.actionAlbumFragmentToPhotoDetailFragment(photoId)
         navController.navigate(navDirections)

@@ -2,9 +2,9 @@ package com.nor35.photos.feature.album.data.repository
 
 import com.nor35.photos.domain.Constants
 import com.nor35.photos.feature.album.data.DataFixtures
-import com.nor35.photos.feature.album.data.database.PhotoDao
-import com.nor35.photos.feature.album.data.remote.PhotoApi
-import com.nor35.photos.feature.album.data.remote.dto.toDataBaseModel
+import com.nor35.photos.data.database.PhotoDao
+import com.nor35.photos.data.remote.PhotoApi
+import com.nor35.photos.data.remote.dto.toDataBaseModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK

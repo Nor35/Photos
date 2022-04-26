@@ -1,4 +1,4 @@
-package com.nor35.photos.feature.album.data.database
+package com.nor35.photos.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
