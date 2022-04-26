@@ -2,7 +2,6 @@ package com.nor35.photos.feature.album.domain
 
 import com.nor35.photos.data.database.PhotoEntity
 import com.nor35.photos.feature.album.domain.model.Photo
-import com.nor35.photos.feature.album.domain.model.PhotoDetail
 
 object DomainFixtures {
 
@@ -30,13 +29,6 @@ object DomainFixtures {
         width: Int = _width,
         id: Long = _id
     ): Photo = Photo(id, imageUrl, width, height)
-
-    internal fun getPhotoDetail(
-        imageUrl: String = _url,
-        height: Int = _height,
-        width: Int = _width,
-        id: Long = _id
-    ): PhotoDetail = PhotoDetail(id, imageUrl, width, height)
 
     internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum) { getPhotoEntity() }
 }

@@ -4,10 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.nor35.photos.domain.Resource
-import com.nor35.photos.feature.album.domain.DomainFixtures
 import com.nor35.photos.feature.album.domain.model.Photo
-import com.nor35.photos.feature.album.domain.model.PhotoDetail
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -29,21 +26,9 @@ object PresenterFixtures {
 
     internal fun getListPhoto() = listOf(getPhoto())
 
-    internal fun getPhotoDetail(
-        imageUrl: String = DomainFixtures._url,
-        height: Int = DomainFixtures._height,
-        width: Int = DomainFixtures._width,
-        id: Long = DomainFixtures._id
-    ): PhotoDetail = PhotoDetail(id, imageUrl, width, height)
-
     internal fun getPhotoFlow() = flow {
         emit(Resource.Loading<List<Photo>>())
         emit(Resource.Success<List<Photo>>(getListPhoto()))
-    }
-
-    internal fun getPhotoDetailFlow(): Flow<Resource<PhotoDetail>> = flow {
-        emit(Resource.Loading<PhotoDetail>())
-        emit(Resource.Success<PhotoDetail>(getPhotoDetail()))
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

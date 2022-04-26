@@ -6,8 +6,6 @@ interface PhotoRepository {
 
     suspend fun getPhoto(): PhotoEntity
 
-    suspend fun getPhoto(photoId: Long): PhotoEntity
-
     suspend fun getAlbum(): List<PhotoEntity>
 
     suspend fun getRandomPhotoFromDB(): PhotoEntity?

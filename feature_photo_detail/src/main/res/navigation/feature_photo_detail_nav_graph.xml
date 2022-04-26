@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:moduleName="feature_photo_detail"
+    app:startDestination="@id/photoDetailFragment">
+
+    <fragment
+        android:id="@+id/albumFragment"
+        app:moduleName="feature_photo_detail"
+        android:name="com.nor35.photos.feature.photo.detail.presentation.album.PhotosFragment"
+        android:label="fragment_album"
+        tools:layout="@layout/fragment_photos" >
+        <action
+            android:id="@+id/action_albumFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.nor35.photos.feature.photo.detail.presentation.photo.detail.PhotoDetailFragment"
+        android:label="PhotoDetailFragment"
+        app:moduleName="feature_photo_detail">
+        <argument
+            android:name="photoId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+    </fragment>
+</navigation>

@@ -1,11 +1,11 @@
 package com.nor35.photos.feature.album.data.repository
 
-import com.nor35.photos.domain.Constants.NUMBER_OF_PHOTOS_ON_PAGE
 import com.nor35.photos.data.database.PhotoDao
 import com.nor35.photos.data.database.PhotoEntity
 import com.nor35.photos.data.remote.PhotoApi
 import com.nor35.photos.data.remote.dto.toDataBaseModel
-import com.nor35.photos.domain.repository.PhotoRepository
+import com.nor35.photos.domain.Constants.NUMBER_OF_PHOTOS_ON_PAGE
+import com.nor35.photos.feature.album.domain.repository.PhotoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -26,10 +26,6 @@ class PhotoRepositoryImpl @Inject constructor(
         photoEntity.id = id
 
         return photoEntity
-    }
-
-    override suspend fun getPhoto(photoId: Long): PhotoEntity {
-        return photoDao.getPhoto(photoId)
     }
 
     override suspend fun getAlbum(): List<PhotoEntity> {

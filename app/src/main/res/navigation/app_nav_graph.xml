@@ -8,5 +8,16 @@
     <include-dynamic
         android:id="@+id/featureAlbumNavGraph"
         app:graphResName="feature_album_nav_graph"
-        app:moduleName="feature_album"/>
+        app:moduleName="feature_album">
+        <action
+            android:id="@+id/action_featureAlbumNavGraph_to_featurePhotoDetailNavGraph"
+            app:destination="@id/featurePhotoDetailNavGraph" />
+    </include-dynamic>
+
+    <include-dynamic
+        android:id="@+id/featurePhotoDetailNavGraph"
+        app:graphResName="feature_photo_detail_nav_graph"
+        app:moduleName="feature_photo_detail">
+    </include-dynamic>
+
 </navigation>

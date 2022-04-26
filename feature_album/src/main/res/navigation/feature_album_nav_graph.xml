@@ -16,6 +16,7 @@
             android:id="@+id/action_albumFragment_to_photoDetailFragment"
             app:destination="@id/photoDetailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/photoDetailFragment"
         android:name="com.nor35.photos.feature.album.presentation.photo.detail.PhotoDetailFragment"

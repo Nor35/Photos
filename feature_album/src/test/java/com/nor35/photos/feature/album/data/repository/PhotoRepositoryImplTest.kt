@@ -1,10 +1,10 @@
 package com.nor35.photos.feature.album.data.repository
 
-import com.nor35.photos.domain.Constants
-import com.nor35.photos.feature.album.data.DataFixtures
 import com.nor35.photos.data.database.PhotoDao
 import com.nor35.photos.data.remote.PhotoApi
 import com.nor35.photos.data.remote.dto.toDataBaseModel
+import com.nor35.photos.domain.Constants
+import com.nor35.photos.feature.album.data.DataFixtures
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -43,24 +43,6 @@ class PhotoRepositoryImplTest {
         val result = runBlocking { photoRepositoryImpl.getPhoto() }
 
         // then
-        assertEquals(result.width, DataFixtures._width)
-        assertEquals(result.height, DataFixtures._height)
-        assertEquals(result.url, DataFixtures._file)
-    }
-
-    @Test
-    fun getPhoto_byId_fetches_PhotoEntity() {
-
-        // given
-        coEvery {
-            mockPhotoDao.getPhoto(DataFixtures._id)
-        } returns(DataFixtures.getPhotoEntity())
-
-        // when
-        val result = runBlocking { photoRepositoryImpl.getPhoto(DataFixtures._id) }
-
-        // then
-        assertEquals(result.id, DataFixtures._id)
         assertEquals(result.width, DataFixtures._width)
         assertEquals(result.height, DataFixtures._height)
         assertEquals(result.url, DataFixtures._file)

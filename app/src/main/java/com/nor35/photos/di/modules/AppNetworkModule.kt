@@ -2,10 +2,10 @@ package com.nor35.photos.di.modules
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.nor35.photos.domain.Constants
-import com.nor35.photos.domain.Constants.MY_NETWORK_TIMEOUT
 import com.nor35.photos.data.remote.PhotoApi
 import com.nor35.photos.di.AppScope
+import com.nor35.photos.domain.Constants
+import com.nor35.photos.domain.Constants.MY_NETWORK_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

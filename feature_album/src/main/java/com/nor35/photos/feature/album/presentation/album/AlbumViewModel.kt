@@ -3,13 +3,13 @@ package com.nor35.photos.feature.album.presentation.album
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.nor35.photos.domain.Resource
 import com.nor35.photos.feature.album.domain.usecase.GetAlbumUseCase
 import com.nor35.photos.feature.album.domain.usecase.GetPhotoUseCase
 import com.nor35.photos.feature.album.domain.usecase.ReloadAllPhotosUseCase
 import com.nor35.photos.feature.album.domain.usecase.UseCaseInterface
 import com.nor35.photos.feature.album.presentation.album.state.PhotoState
+import com.nor35.photos.presentation.routing.RouterSources
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -59,9 +59,8 @@ class AlbumViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun navigateToPhotoDetail(photoId: Long, navController: NavController) {
+    fun navigateToPhotoDetail(photoId: Long) {
 
-        val navDirections = PhotosFragmentDirections.actionAlbumFragmentToPhotoDetailFragment(photoId)
-        navController.navigate(navDirections)
+        RouterSources.albumFragmentRouterSource?.moveToPhotoDetail(photoId)
     }
 }
