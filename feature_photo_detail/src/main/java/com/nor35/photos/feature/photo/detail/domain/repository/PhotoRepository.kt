@@ -4,5 +4,5 @@ import com.nor35.photos.data.database.PhotoEntity
 
 interface PhotoRepository {
 
-    suspend fun getPhoto(photoId: Long): PhotoEntity
+    suspend fun getPhoto(photoId: Long): PhotoEntity?
 }

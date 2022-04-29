@@ -13,4 +13,6 @@ interface PhotoRepository {
     suspend fun getAlbumFromDB(): List<PhotoEntity>?
 
     suspend fun deleteAllPhotosFromDB()
+
+    suspend fun getPhoto(photoId: Long): PhotoEntity?
 }

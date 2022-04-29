@@ -6,6 +6,7 @@ import com.nor35.photos.domain.Resource
 import com.nor35.photos.feature.album.domain.model.Photo
 import com.nor35.photos.feature.album.domain.usecase.GetAlbumUseCase
 import com.nor35.photos.feature.album.domain.usecase.GetPhotoUseCase
+import com.nor35.photos.feature.album.domain.usecase.GetSavedAlbumUseCase
 import com.nor35.photos.feature.album.domain.usecase.ReloadAllPhotosUseCase
 import com.nor35.photos.feature.album.presentation.album.AlbumViewModel
 import com.nor35.photos.feature.album.presentation.album.state.PhotoState
@@ -25,6 +26,10 @@ import org.junit.runner.RunWith
 class AlbumViewModelTest {
 
     @MockK
+    internal var savedAlbumUseCase: GetSavedAlbumUseCase? = null
+    @MockK
+    internal lateinit var mockGetSavedAlbumUseCaseFactory: GetSavedAlbumUseCase.GetSavedAlbumUseCaseFactory
+    @MockK
     internal lateinit var mockGetAlbumUseCase: GetAlbumUseCase
     @MockK
     internal lateinit var mockGetPhotoUseCase: GetPhotoUseCase
@@ -42,7 +47,7 @@ class AlbumViewModelTest {
     }
 
     @Test
-    fun init_AlbumViewModel_fetches_PhotoStatel() {
+    fun init_AlbumViewModel_fetches_PhotoState() {
 
         // given
         coEvery {
@@ -52,7 +57,8 @@ class AlbumViewModelTest {
         // when
         viewModel = AlbumViewModel(
             mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase
+            mockReloadAllPhotosUseCase, mockGetSavedAlbumUseCaseFactory,
+            null
         )
 
         // then
@@ -75,7 +81,8 @@ class AlbumViewModelTest {
 
         viewModel = AlbumViewModel(
             mockGetAlbumUseCase, mockGetPhotoUseCase,
-            mockReloadAllPhotosUseCase
+            mockReloadAllPhotosUseCase, mockGetSavedAlbumUseCaseFactory,
+            null
         )
 
         // when

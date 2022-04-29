@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.nor35.photos.domain.Resource
+import com.nor35.photos.feature.album.domain.DomainFixtures
 import com.nor35.photos.feature.album.domain.model.Photo
 import kotlinx.coroutines.flow.flow
 import java.util.concurrent.CountDownLatch
@@ -16,6 +17,7 @@ object PresenterFixtures {
     const val _height: Int = 1
     const val _width: Int = 2
     const val _id: Long = 3
+    const val _numbersOfPhotoOnAlbum = 10
 
     internal fun getPhoto(
         imageUrl: String = _imageUrl,
@@ -30,6 +32,8 @@ object PresenterFixtures {
         emit(Resource.Loading<List<Photo>>())
         emit(Resource.Success<List<Photo>>(getListPhoto()))
     }
+
+    internal fun getPhotoIdArray(): LongArray = LongArray(_numbersOfPhotoOnAlbum) { DomainFixtures._id }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun <T> LiveData<T>.getOrAwaitValue(

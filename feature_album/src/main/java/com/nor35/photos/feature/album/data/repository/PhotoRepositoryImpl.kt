@@ -47,4 +47,8 @@ class PhotoRepositoryImpl @Inject constructor(
     override suspend fun deleteAllPhotosFromDB() {
         photoDao.deleteAll()
     }
+
+    override suspend fun getPhoto(photoId: Long): PhotoEntity? {
+        return photoDao.getPhoto(photoId)
+    }
 }

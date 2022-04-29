@@ -2,9 +2,7 @@ package com.nor35.photos.feature.photo.detail.presentation.photo.detail
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.load
@@ -12,36 +10,29 @@ import com.nor35.photos.PhotosApplication
 import com.nor35.photos.feature.photo.detail.R
 import com.nor35.photos.feature.photo.detail.databinding.FragmentPhotoDetailBinding
 import com.nor35.photos.feature.photo.detail.di.DaggerFeaturePhotoDetailComponent
+import com.nor35.photos.presentation.delegate.viewBinding
 import javax.inject.Inject
 
-class PhotoDetailFragment : Fragment() {
+class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
 
-    private lateinit var binding: FragmentPhotoDetailBinding
+    private val binding: FragmentPhotoDetailBinding by viewBinding()
+
+    private var photoDetailViewModel: PhotoDetailViewModel? = null
 
     @Inject
     lateinit var photoDetailViewModelFactory: PhotoDetailViewModelFactory
 
-    lateinit var photoDetailViewModel: PhotoDetailViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        setHasOptionsMenu(true)
-        binding = FragmentPhotoDetailBinding.inflate(inflater, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val photoId = requireArguments().getLong(this.resources.getString(R.string.photoId))
-
         photoDetailViewModel = photoDetailViewModelFactory.create(photoId)
         setupPhotoDetailViewModelObserver()
-
-        return binding.root
     }
 
     private fun setupPhotoDetailViewModelObserver() {
 
-        photoDetailViewModel.liveData.observe(viewLifecycleOwner) { photoDetailState ->
+        photoDetailViewModel?.liveData?.observe(viewLifecycleOwner) { photoDetailState ->
             if (photoDetailState.isLoading)
                 binding.photoDetailProgressBar.visibility = View.VISIBLE
             else

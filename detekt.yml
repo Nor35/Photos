@@ -530,7 +530,12 @@ potential-bugs:
   IteratorHasNextCallsNextMethod:
     active: true
   IteratorNotThrowingNoSuchElementException:
+    active: true    
+  LateinitUsage:
     active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
+    excludeAnnotatedProperties: [javax.inject.Inject]
+    ignoreOnClassesPattern: ''    
   MapGetWithNotNullAssertionOperator:
     active: false
   MissingWhenCase:

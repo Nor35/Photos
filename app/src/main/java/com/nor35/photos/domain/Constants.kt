@@ -12,5 +12,7 @@ object Constants {
 
     const val DELAY_WHEN_ADDING_ONE_PICTURE = 1000L
 
-    const val MY_NETWORK_TIMEOUT = 10L
+    const val MY_NETWORK_TIMEOUT = 20L
+
+    const val PHOTO_ID_ARRAY = "PHOTO_ID_ARRAY"
 }

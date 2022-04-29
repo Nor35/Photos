@@ -19,23 +19,23 @@ class GetPhotoUseCase @Inject constructor(
 
         try {
             emit(Resource.Loading<List<Photo>>())
-            val album = repository.getPhoto().toDomainModel()
-            emit(Resource.Success<List<Photo>>(listOf(album)))
+            val photo = repository.getPhoto().toDomainModel()
+            emit(Resource.Success<List<Photo>>(listOf(photo)))
         } catch (e: HttpException) {
-            emit(getDbAlbumIfExist(e, "An unexpected error occured"))
+            emit(getDbPhotoIfExist(e, "An unexpected error occurred"))
         } catch (e: IOException) {
             emit(
-                getDbAlbumIfExist(
+                getDbPhotoIfExist(
                     e,
                     "Couldn't reach server. Check your internet connection"
                 )
             )
         } catch (e: Exception) {
-            emit(getDbAlbumIfExist(e, "Unknown error in GetPhotoUseCase class"))
+            emit(getDbPhotoIfExist(e, "Unknown error in GetPhotoUseCase class"))
         }
     }
 
-    private suspend fun getDbAlbumIfExist(e: Exception, errorMessage: String):
+    private suspend fun getDbPhotoIfExist(e: Exception, errorMessage: String):
         Resource<List<Photo>> {
 
         val photoFromDB = repository.getRandomPhotoFromDB()

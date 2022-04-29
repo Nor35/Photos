@@ -43,7 +43,10 @@ class GetPhotoUseCaseTest {
 
                 val resultItem = awaitItem()
                 assertTrue(resultItem is Resource.Success<*>)
-                assertEquals(listOf(DomainFixtures.getPhoto()), (resultItem as Resource.Success<*>).data)
+                assertEquals(
+                    listOf(DomainFixtures.getPhoto()),
+                    (resultItem as Resource.Success<*>).data
+                )
 
                 awaitComplete()
             }

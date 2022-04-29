@@ -22,7 +22,7 @@ class ReloadAllPhotosUseCase @Inject constructor(
             val album = repository.getAlbum().map { it.toDomainModel() }
             emit(Resource.Success<List<Photo>>(album))
         } catch (e: HttpException) {
-            emit(getDbAlbumIfExist(e, "An unexpected error occured"))
+            emit(getDbAlbumIfExist(e, "An unexpected error occurred"))
         } catch (e: IOException) {
             emit(getDbAlbumIfExist(e, "Couldn't reach server. Check your internet connection"))
         } catch (e: Exception) {

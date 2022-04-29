@@ -10,6 +10,7 @@ import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 
@@ -108,5 +109,24 @@ class PhotoRepositoryImplTest {
             assertEquals(photoEntity.url, DataFixtures._file)
             assertEquals(photoEntity.id, DataFixtures._id)
         }
+    }
+
+    @Test
+    fun getPhoto_byId_fetches_PhotoEntity() {
+
+        // given
+        coEvery {
+            mockPhotoDao.getPhoto(DataFixtures._id)
+        } returns(DataFixtures.getPhotoEntity())
+
+        // when
+        val result = runBlocking { photoRepositoryImpl.getPhoto(DataFixtures._id) }
+
+        // then
+        assertNotNull(result)
+        assertEquals(result!!.id, DataFixtures._id)
+        assertEquals(result.width, DataFixtures._width)
+        assertEquals(result.height, DataFixtures._height)
+        assertEquals(result.url, DataFixtures._file)
     }
 }

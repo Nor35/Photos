@@ -31,4 +31,6 @@ object DomainFixtures {
     ): Photo = Photo(id, imageUrl, width, height)
 
     internal fun getAlbum(): List<PhotoEntity> = List(_numbersOfPhotoOnAlbum) { getPhotoEntity() }
+
+    internal fun getPhotoIdArray(): LongArray = LongArray(_numbersOfPhotoOnAlbum) { _id }
 }

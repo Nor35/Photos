@@ -6,6 +6,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +36,8 @@ class PhotoRepositoryImplTest {
         val result = runBlocking { photoRepositoryImpl.getPhoto(DataFixtures._id) }
 
         // then
-        assertEquals(result.id, DataFixtures._id)
+        Assert.assertNotNull(result)
+        assertEquals(result!!.id, DataFixtures._id)
         assertEquals(result.width, DataFixtures._width)
         assertEquals(result.height, DataFixtures._height)
         assertEquals(result.url, DataFixtures._file)

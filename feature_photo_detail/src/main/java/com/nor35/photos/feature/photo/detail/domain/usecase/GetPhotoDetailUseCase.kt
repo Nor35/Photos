@@ -17,13 +17,16 @@ class GetPhotoDetailUseCase @Inject constructor(
     operator fun invoke(photoId: Long): Flow<Resource<PhotoDetail>> = flow {
         try {
             emit(Resource.Loading<PhotoDetail>())
-            val photo = repository.getPhoto(photoId).toPhotoDetailDomainModel()
-            emit(Resource.Success<PhotoDetail>(photo))
+            val photo = repository.getPhoto(photoId)?.toPhotoDetailDomainModel()
+            if (photo == null)
+                emit(Resource.Error<PhotoDetail>("Error getting photo form Database"))
+            else
+                emit(Resource.Success<PhotoDetail>(photo))
         } catch (e: HttpException) {
             emit(
                 Resource.Error<PhotoDetail>(
                     "Error getting photo detail" +
-                        ": ${e.localizedMessage ?: "An unexpected error occured"}"
+                        ": ${e.localizedMessage ?: "An unexpected error occurred"}"
                 )
             )
         } catch (e: IOException) {

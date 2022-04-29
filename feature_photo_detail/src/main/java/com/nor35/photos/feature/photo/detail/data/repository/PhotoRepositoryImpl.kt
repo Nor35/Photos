@@ -9,7 +9,7 @@ class PhotoRepositoryImpl @Inject constructor(
     private val photoDao: PhotoDao
 ) : PhotoRepository {
 
-    override suspend fun getPhoto(photoId: Long): PhotoEntity {
+    override suspend fun getPhoto(photoId: Long): PhotoEntity? {
         return photoDao.getPhoto(photoId)
     }
 }

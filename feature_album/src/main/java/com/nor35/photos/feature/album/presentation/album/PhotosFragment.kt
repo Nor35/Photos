@@ -2,12 +2,10 @@ package com.nor35.photos.feature.album.presentation.album
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,34 +14,48 @@ import com.nor35.photos.PhotosApplication
 import com.nor35.photos.domain.Constants.DELAY_WHEN_ADDING_ONE_PICTURE
 import com.nor35.photos.domain.Constants.NUMBER_OF_COLUMNS
 import com.nor35.photos.domain.Constants.NUMBER_OF_ROWS
+import com.nor35.photos.domain.Constants.PHOTO_ID_ARRAY
 import com.nor35.photos.feature.album.R
 import com.nor35.photos.feature.album.databinding.FragmentPhotosBinding
 import com.nor35.photos.feature.album.di.DaggerFeatureAlbumComponent
+import com.nor35.photos.feature.album.presentation.album.AlbumViewModel.AlbumViewModelFactory
 import com.nor35.photos.feature.album.presentation.album.recyclerview.PhotoAdapter
+import com.nor35.photos.presentation.delegate.viewBinding
+import timber.log.Timber
 import javax.inject.Inject
 
-class PhotosFragment : Fragment() {
+class PhotosFragment : Fragment(R.layout.fragment_photos) {
 
-    private lateinit var binding: FragmentPhotosBinding
+    private val binding: FragmentPhotosBinding by viewBinding()
+
+    private var albumViewModel: AlbumViewModel? = null
 
     @Inject
-    lateinit var albumViewModel: AlbumViewModel
+    lateinit var albumViewModelFactory: AlbumViewModelFactory
 
     @Inject
     lateinit var photoAdapter: PhotoAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        binding = FragmentPhotosBinding.inflate(inflater, container, false)
+
+        if (albumViewModel == null) {
+            initViewModel(savedInstanceState)
+            setupAlbumViewModelObserver()
+        }
 
         initAlbumRecyclerview()
-        setupAlbumViewModelObserver()
+    }
 
-        return binding.root
+    private fun initViewModel(savedInstanceState: Bundle?) {
+
+        val photoIdArray = savedInstanceState?.getLongArray(PHOTO_ID_ARRAY)
+        if (photoIdArray != null && photoIdArray.size >= 0) {
+            Timber.d("Restore photoId Array from Bundle with ${photoIdArray.size} elements")
+        }
+
+        albumViewModel = albumViewModelFactory.create(photoIdArray)
     }
 
     private fun initAlbumRecyclerview() {
@@ -58,7 +70,7 @@ class PhotosFragment : Fragment() {
             adapter = photoAdapter
         }
         photoAdapter.setOnClickListener { photoId: Long ->
-            albumViewModel.navigateToPhotoDetail(photoId)
+            albumViewModel?.navigateToPhotoDetail(photoId)
         }
     }
 
@@ -72,7 +84,7 @@ class PhotosFragment : Fragment() {
 
     private fun setupAlbumViewModelObserver() {
 
-        albumViewModel.liveData.observe(viewLifecycleOwner) { photoState ->
+        albumViewModel?.liveData?.observe(viewLifecycleOwner) { photoState ->
 
             if (photoState.isLoading)
                 binding.albumProgressBar.visibility = View.VISIBLE
@@ -96,7 +108,7 @@ class PhotosFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_add_image -> {
-                albumViewModel.getPhoto()
+                albumViewModel?.getPhoto()
                 if (photoAdapter.itemCount > 0)
                     binding.albumRecyclerview.postDelayed(
                         {
@@ -109,11 +121,21 @@ class PhotosFragment : Fragment() {
             }
             R.id.action_reload_all -> {
                 photoAdapter.deletePhotos()
-                albumViewModel.reloadAllPhotos()
+                albumViewModel?.reloadAllPhotos()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        val photoIdArray: MutableList<Long> = mutableListOf()
+        photoAdapter.photos.onEach { photoIdArray.add(it.id) }
+
+        outState.putLongArray(PHOTO_ID_ARRAY, photoIdArray.toLongArray())
+        Timber.d("Save photoId Array in Bundle with ${photoIdArray.size} elements")
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
