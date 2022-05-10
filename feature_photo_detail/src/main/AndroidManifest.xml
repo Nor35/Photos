@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.nor35.photos.feature.photo.detail">
 
@@ -9,5 +9,17 @@
         dist:title="@string/feature_photo_detail">
         <dist:fusing dist:include="false"/>
     </dist:module>
+
+    <application>
+        <receiver
+            android:name=".domain.notifications.MeowBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.nor35.action.SEND_DATA" />
+            </intent-filter>
+        </receiver>
+    </application>
 
 </manifest>

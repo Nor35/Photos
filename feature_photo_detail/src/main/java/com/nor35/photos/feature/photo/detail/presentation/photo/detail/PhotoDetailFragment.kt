@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.nor35.photos.PhotosApplication
 import com.nor35.photos.feature.photo.detail.R
 import com.nor35.photos.feature.photo.detail.databinding.FragmentPhotoDetailBinding
 import com.nor35.photos.feature.photo.detail.di.DaggerFeaturePhotoDetailComponent
+import com.nor35.photos.feature.photo.detail.domain.notifications.MeowNotification
 import com.nor35.photos.presentation.delegate.viewBinding
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
@@ -53,8 +56,17 @@ class PhotoDetailFragment : Fragment(R.layout.fragment_photo_detail) {
                     crossfade(true)
                 }
 
-                binding.photoDetailWidht.text = getString(R.string.width_message, photoDetailState.photoDetail.width)
-                binding.photoDetailHeight.text = getString(R.string.height_message, photoDetailState.photoDetail.height)
+                binding.photoDetailWidht.text =
+                    getString(R.string.width_message, photoDetailState.photoDetail.width)
+                binding.photoDetailHeight.text =
+                    getString(R.string.height_message, photoDetailState.photoDetail.height)
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    MeowNotification().invoke(
+                        this@PhotoDetailFragment.requireContext(),
+                        photoDetailState.photoDetail.imageUrl
+                    )
+                }
             }
         }
     }

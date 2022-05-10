@@ -8,4 +8,14 @@
 
     <string name="width_message">Width photo = %1$d</string>
     <string name="height_message">Height photo = %1$d</string>
+
+    <string name="meow_notification">Мяу уведомления</string>
+    <string name="photos_notification">Photos notifications</string>
+    <string name="meow">Mяу</string>
+    <string name="i_want_to_eat">(Я хочу есть!)</string>
+    <string name="feed_the_cat">Покормить кота</string>
+    <string name="kick_the_cat">Пнуть кота</string>
+    <string name="meow_thanks">Мяу (Спасибо)</string>
+    <string name="meow_rude_answer">Мяу (Да что ты себе позволяешь?! Двуногий уб**док!)</string>
+
 </resources>

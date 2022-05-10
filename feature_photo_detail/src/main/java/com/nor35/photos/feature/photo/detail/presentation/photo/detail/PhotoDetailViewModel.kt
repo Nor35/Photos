@@ -30,12 +30,12 @@ class PhotoDetailViewModel @AssistedInject constructor(
                 is Resource.Success -> {
                     val data = result.data
                     if (data == null)
-                        _liveData.value = PhotoDetailState(error = "Photos not reseived")
+                        _liveData.value = PhotoDetailState(error = "Photos not received")
                     else
                         _liveData.value = PhotoDetailState(photoDetail = data)
                 }
                 is Resource.Error -> {
-                    _liveData.value = PhotoDetailState(error = result.message ?: "An unexpected error occured")
+                    _liveData.value = PhotoDetailState(error = result.message ?: "An unexpected error occurred")
                 }
                 is Resource.Loading -> {
                     _liveData.value = PhotoDetailState(isLoading = true)

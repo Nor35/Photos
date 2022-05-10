@@ -16,6 +16,7 @@ class ReloadAllPhotosUseCase @Inject constructor(
 ) : UseCaseInterface {
 
     override operator fun invoke(): Flow<Resource<List<Photo>>> = flow {
+
         try {
             emit(Resource.Loading<List<Photo>>())
             repository.deleteAllPhotosFromDB()

@@ -14,9 +14,9 @@ internal interface FeaturePhotoDetailComponent {
     fun inject(photosFragment: PhotoDetailFragment)
 
     @Component.Builder
-    interface AlbumComponentBuilder {
+    interface PhotoDetailComponentBuilder {
         fun buildAlbumComponent(): FeaturePhotoDetailComponent
 
-        fun bindAppComponent(appComponent: AppComponent): AlbumComponentBuilder
+        fun bindAppComponent(appComponent: AppComponent): PhotoDetailComponentBuilder
     }
 }

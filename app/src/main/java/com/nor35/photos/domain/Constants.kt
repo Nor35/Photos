@@ -12,7 +12,10 @@ object Constants {
 
     const val DELAY_WHEN_ADDING_ONE_PICTURE = 1000L
 
-    const val MY_NETWORK_TIMEOUT = 20L
+    const val MY_NETWORK_TIMEOUT = 5L
 
     const val PHOTO_ID_ARRAY = "PHOTO_ID_ARRAY"
+
+    const val MEOW_NOTIFICATION_TAG = "MEOW_NOTIFICATION_TAG"
+    const val MEOW_ACTION = "com.nor35.action.SEND_DATA"
 }
