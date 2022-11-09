@@ -6,6 +6,21 @@ plugins {
     id 'org.jlleitschuh.gradle.ktlint'
 }
 
+def getBuildDate = { ->
+    return new Date().format("dd.MM.yyyy").toString().trim()
+}
+
+tasks.register('updateVersionCode') {
+
+    int oldVersionCode = android.defaultConfig.versionCode
+    int newVersionCode = oldVersionCode + 1
+
+    def updated = buildFile.getText()
+    updated = updated.replaceFirst("versionCode $oldVersionCode", "versionCode $newVersionCode")
+
+    buildFile.setText(updated)
+}
+
 android {
     compileSdk androidConfig.compile_sdk_version
 
@@ -15,6 +30,7 @@ android {
         targetSdk androidConfig.target_sdk_version
         versionCode androidConfig.version_code
         versionName androidConfig.version_name
+        buildConfigField "String", "BUILD_DATE", "\"${getBuildDate()}\""
 
         testInstrumentationRunner androidConfig.test_instrumentation_runner
     }
